@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id              String           @id @default(cuid())
+  email           String           @unique
+  phone           String?          @unique
+  password        String?
+  name            String?
+  createdAt       DateTime         @default(now())
+  role            UserRole         @default(CUSTOMER)
+  bakerProfile    BakerProfile?
+  bookings        Booking[]
+  customerProfile CustomerProfile?
+  posts           Post[]           @relation("BakerPosts")
+}
+
+model BakerProfile {
+  id            String         @id @default(cuid())
+  userId        String         @unique
+  bio           String?
+  user          User           @relation(fields: [userId], references: [id])
+  ingredients   Ingredient[]
+  inviteTokens  InviteToken[]
+  notifications Notification[]
+  posts         Post[]
+  products      Product[]
+  subscribers   Subscription[]
+}
+
+model CustomerProfile {
+  id            String         @id @default(cuid())
+  userId        String         @unique
+  bookings      Booking[]
+  user          User           @relation(fields: [userId], references: [id])
+  subscriptions Subscription[]
+}
+
+model Post {
+  id             String        @id @default(cuid())
+  title          String
+  description    String?
+  bakerId        String
+  pickupDate     DateTime
+  createdAt      DateTime      @default(now())
+  bakerProfileId String?
+  bakerProfile   BakerProfile? @relation(fields: [bakerProfileId], references: [id])
+  baker          User          @relation("BakerPosts", fields: [bakerId], references: [id])
+  products       PostProduct[]
+}
+
+model PostProduct {
+  id                String    @id @default(cuid())
+  postId            String
+  productId         String
+  price             Float
+  totalQuantity     Int
+  availableQuantity Int
+  bookings          Booking[]
+  product           Product   @relation(fields: [productId], references: [id])
+  post              Post      @relation(fields: [postId], references: [id])
+
+  @@unique([postId, productId])
+}
+
+model Product {
+  id             String              @id @default(cuid())
+  bakerProfileId String
+  name           String
+  description    String?
+  photo          String?
+  kcal           Float?
+  protein        Float?
+  fat            Float?
+  carbs          Float?
+  postProducts   PostProduct[]
+  baker          BakerProfile        @relation(fields: [bakerProfileId], references: [id])
+  ingredients    ProductIngredient[]
+
+  @@unique([bakerProfileId, name])
+}
+
+model Ingredient {
+  id             String              @id @default(cuid())
+  bakerProfileId String
+  name           String
+  quantity       Float
+  metric         String              @default("g")
+  kcal           Float?
+  protein        Float?
+  fat            Float?
+  carbs          Float?
+  baker          BakerProfile        @relation(fields: [bakerProfileId], references: [id])
+  products       ProductIngredient[]
+
+  @@unique([bakerProfileId, name])
+}
+
+model ProductIngredient {
+  id           String     @id @default(cuid())
+  productId    String
+  ingredientId String
+  weight       Float?
+  metric       String?
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  product      Product    @relation(fields: [productId], references: [id])
+
+  @@unique([productId, ingredientId])
+}
+
+model Booking {
+  id                String           @id @default(cuid())
+  customerId        String
+  postProductId     String
+  quantity          Int
+  createdAt         DateTime         @default(now())
+  customerProfileId String?
+  customerProfile   CustomerProfile? @relation(fields: [customerProfileId], references: [id])
+  postProduct       PostProduct      @relation(fields: [postProductId], references: [id])
+  customer          User             @relation(fields: [customerId], references: [id])
+}
+
+model Subscription {
+  id         String          @id @default(cuid())
+  customerId String
+  bakerId    String
+  createdAt  DateTime        @default(now())
+  baker      BakerProfile    @relation(fields: [bakerId], references: [id])
+  customer   CustomerProfile @relation(fields: [customerId], references: [id])
+
+  @@unique([customerId, bakerId])
+}
+
+model InviteToken {
+  id             String       @id @default(cuid())
+  code           String       @unique
+  bakerProfileId String
+  createdAt      DateTime     @default(now())
+  active         Boolean      @default(true)
+  baker          BakerProfile @relation(fields: [bakerProfileId], references: [id])
+
+  @@index([code])
+}
+
+model Notification {
+  id             String       @id @default(cuid())
+  bakerProfileId String
+  type           String
+  message        String
+  data           Json?
+  read           Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  baker          BakerProfile @relation(fields: [bakerProfileId], references: [id])
+}
+
+enum UserRole {
+  BAKER
+  CUSTOMER
+}
