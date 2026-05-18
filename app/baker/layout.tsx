@@ -23,15 +23,15 @@ import NotificationBell from '@/app/components/NotificationBell'
 const drawerWidth = 240
 
 const menuItems = [
-  { label: 'Dashboard', href: '/baker', icon: DashboardIcon },
-  { label: 'Ingredients', href: '/baker/ingredients', icon: LocalFloristIcon },
+  { label: 'Дашборд', href: '/baker', icon: DashboardIcon },
+  { label: 'Ингредиенты', href: '/baker/ingredients', icon: LocalFloristIcon },
   {
-    label: 'Products',
+    label: 'Продукты',
     href: '/baker/products',
     icon: ProductionQuantityLimitsIcon,
   },
-  { label: 'Posts', href: '/baker/posts', icon: ArticleIcon },
-  { label: 'Referral Links', href: '/baker/invites', icon: SendIcon },
+  { label: 'Посты', href: '/baker/posts', icon: ArticleIcon },
+  { label: 'Реферальные ссылки', href: '/baker/invites', icon: SendIcon },
 ]
 
 export default function BakerLayout({
@@ -56,7 +56,7 @@ export default function BakerLayout({
           <Box
             sx={{ fontSize: '1.25rem', fontWeight: 700, color: '#000000' }}
           >
-            🍰 Bakery
+            🍰 Baker-Ing
           </Box>
           <NotificationBell />
         </Box>
@@ -92,7 +92,7 @@ export default function BakerLayout({
             startIcon={<LogoutIcon />}
             onClick={() => signOut()}
           >
-            Sign Out
+            Выйти
           </Button>
         </Box>
       </Drawer>

@@ -22,7 +22,7 @@ export default async function Home() {
           variant="h2"
           sx={{ mb: 4, fontWeight: 700, color: '#000000' }}
         >
-          🍰 Bakery Marketplace
+          🍰 Baker-Ing
         </Typography>
 
         {session?.user ? (
@@ -31,7 +31,7 @@ export default async function Home() {
               <Stack spacing={3}>
                 <Box>
                   <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
-                    Welcome back!
+                    С возвращением!
                   </Typography>
                   <Typography
                     variant="body1"
@@ -41,7 +41,7 @@ export default async function Home() {
                     {session.user.email}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
-                    <strong>Role:</strong> {session.user.role}
+                    <strong>Роль:</strong> {session.user.role === 'BAKER' ? 'Пекарь' : 'Покупатель'}
                   </Typography>
                 </Box>
 
@@ -52,7 +52,7 @@ export default async function Home() {
                       sx={{ mb: 2 }}
                       color="textSecondary"
                     >
-                      Manage your bakery and create posts for customers.
+                      Управляйте своей пекарней и создавайте посты для покупателей.
                     </Typography>
                     <Link href="/baker" style={{ textDecoration: 'none' }}>
                       <Button
@@ -61,7 +61,7 @@ export default async function Home() {
                         fullWidth
                         startIcon={<DashboardIcon />}
                       >
-                        Go to Baker Dashboard
+                        Перейти в панель пекаря
                       </Button>
                     </Link>
                   </Box>
@@ -74,7 +74,7 @@ export default async function Home() {
                       sx={{ mb: 2 }}
                       color="textSecondary"
                     >
-                      Browse and book products from your favorite bakers.
+                      Просматривайте и заказывайте товары от любимых пекарей.
                     </Typography>
                     <Link href="/customer" style={{ textDecoration: 'none' }}>
                       <Button
@@ -83,7 +83,7 @@ export default async function Home() {
                         fullWidth
                         startIcon={<DashboardIcon />}
                       >
-                        Go to Customer Dashboard
+                        Перейти в панель покупателя
                       </Button>
                     </Link>
                   </Box>
@@ -96,10 +96,10 @@ export default async function Home() {
             <CardContent>
               <Stack spacing={3} sx={{ textAlign: 'center' }}>
                 <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  Welcome to Bakery Marketplace
+                  Добро пожаловать в Baker-Ing
                 </Typography>
                 <Typography variant="body1" color="textSecondary">
-                  Sign in to browse bakery products or manage your bakery.
+                  Войдите, чтобы просматривать товары пекарен или управлять своей пекарней.
                 </Typography>
                 <Link href="/signin" style={{ textDecoration: 'none' }}>
                   <Button
@@ -108,7 +108,7 @@ export default async function Home() {
                     fullWidth
                     startIcon={<LoginIcon />}
                   >
-                    Sign In
+                    Войти
                   </Button>
                 </Link>
               </Stack>

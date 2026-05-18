@@ -95,7 +95,7 @@ export default function ProductForm({
               color: '#000000',
             }}
           >
-            Product Details
+            Детали продукта
           </Typography>
 
           <Box
@@ -116,29 +116,29 @@ export default function ProductForm({
                 color="textSecondary"
                 sx={{ display: 'block', mt: 1, textAlign: 'center' }}
               >
-                Upload product image. Leave empty for default.
+                Загрузите изображение. Оставьте пустым для стандартного.
               </Typography>
             </Box>
 
             <Stack spacing={2} sx={{ flex: 2 }}>
               <TextField
                 fullWidth
-                label="Product Name"
+                label="Название"
                 value={name}
                 onChange={(e) => onChange('name', e.target.value)}
                 required
                 size="small"
-                placeholder="e.g., Chocolate Cake"
+                placeholder="например, Шоколадный торт"
               />
               <TextField
                 fullWidth
-                label="Description"
+                label="Описание"
                 value={description}
                 onChange={(e) => onChange('description', e.target.value)}
                 multiline
                 rows={4}
                 size="small"
-                placeholder="Describe your product..."
+                placeholder="Опишите ваш продукт..."
               />
 
               <NutritionInputs
@@ -168,7 +168,7 @@ export default function ProductForm({
 
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
           <Button type="button" variant="outlined" onClick={onCancel}>
-            Cancel
+            Отмена
           </Button>
           <Button
             type="submit"
@@ -176,7 +176,7 @@ export default function ProductForm({
             startIcon={<AddIcon />}
             size="large"
           >
-            {editingId ? 'Update Product' : 'Create Product'}
+            {editingId ? 'Обновить продукт' : 'Создать продукт'}
           </Button>
         </Box>
       </Stack>

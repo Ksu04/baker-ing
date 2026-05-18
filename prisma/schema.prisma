@@ -141,6 +141,7 @@ model InviteToken {
   id             String       @id @default(cuid())
   code           String       @unique
   bakerProfileId String
+  type           String       @default("CUSTOMER")
   createdAt      DateTime     @default(now())
   active         Boolean      @default(true)
   baker          BakerProfile @relation(fields: [bakerProfileId], references: [id])

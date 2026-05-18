@@ -13,11 +13,10 @@ export default function ProductHeader() {
     >
       <CardContent>
         <Typography variant="h4" sx={{ mb: 1, fontWeight: 700 }}>
-          🧁 Product Manager
+          🧁 Управление продуктами
         </Typography>
         <Typography variant="body1" sx={{ opacity: 0.9 }}>
-          Create reusable products with custom ingredients, then add them to
-          posts.
+          Создавайте продукты с ингредиентами, затем добавляйте их в посты.
         </Typography>
       </CardContent>
     </Card>

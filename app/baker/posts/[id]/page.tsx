@@ -71,7 +71,7 @@ export default function PostDetailPage() {
   useEffect(() => {
     if (session?.user?.role === 'BAKER' && postId) {
       fetch(`/api/posts/${postId}`)
-        .then((r) => (r.ok ? r.json() : { error: 'Failed to load' }))
+        .then((r) => (r.ok ? r.json() : { error: 'Ошибка загрузки' }))
         .then((data) => {
           if (data.error) {
             setError(data.error)
@@ -81,7 +81,7 @@ export default function PostDetailPage() {
           setLoading(false)
         })
         .catch(() => {
-          setError('Failed to load post')
+          setError('Не удалось загрузить пост')
           setLoading(false)
         })
     }
@@ -106,7 +106,7 @@ export default function PostDetailPage() {
   if (session?.user?.role !== 'BAKER') {
     return (
       <Container maxWidth="md" sx={{ pt: 4 }}>
-        <Alert severity="error">Unauthorized</Alert>
+        <Alert severity="error">Нет доступа</Alert>
       </Container>
     )
   }
@@ -120,7 +120,7 @@ export default function PostDetailPage() {
           onClick={() => router.push('/baker/posts')}
           sx={{ mt: 2 }}
         >
-          Back to Posts
+          Назад к постам
         </Button>
       </Container>
     )
@@ -129,13 +129,13 @@ export default function PostDetailPage() {
   if (!post) {
     return (
       <Container maxWidth="md" sx={{ pt: 4 }}>
-        <Alert severity="info">Post not found</Alert>
+        <Alert severity="info">Пост не найден</Alert>
         <Button
           startIcon={<ArrowBackIcon />}
           onClick={() => router.push('/baker/posts')}
           sx={{ mt: 2 }}
         >
-          Back to Posts
+          Назад к постам
         </Button>
       </Container>
     )
@@ -158,7 +158,7 @@ export default function PostDetailPage() {
         onClick={() => router.push('/baker/posts')}
         sx={{ mb: 3 }}
       >
-        Back to Posts
+        Назад к постам
       </Button>
 
       <Card sx={{ mb: 4, opacity: isExpired ? 0.6 : 1 }}>
@@ -180,8 +180,8 @@ export default function PostDetailPage() {
                 >
                   {post.title}
                 </Typography>
-                {isExpired && (
-                  <Chip label="Expired" color="error" size="small" />
+                  {isExpired && (
+                  <Chip label="Просрочен" color="error" size="small" />
                 )}
               </Stack>
               <Stack
@@ -205,7 +205,7 @@ export default function PostDetailPage() {
                   {totalBookings} / {totalQuantity}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  bookings / total
+                  брони / всего
                 </Typography>
               </Box>
             </Stack>
@@ -267,11 +267,11 @@ export default function PostDetailPage() {
                   </Box>
                   <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
                     <Typography variant="body2" color="text.secondary">
-                      {booked} / {pp.totalQuantity} booked
+                      забронировано: {booked} / {pp.totalQuantity}
                     </Typography>
                     {pp.availableQuantity === 0 && (
                       <Chip
-                        label="Sold out"
+                        label="Распродано"
                         size="small"
                         color="error"
                         variant="outlined"
@@ -282,7 +282,7 @@ export default function PostDetailPage() {
 
                 {productBookings.length === 0 ? (
                     <Alert severity="info" sx={{ mt: 2 }}>
-                      No bookings for this product yet.
+                      Броней на этот продукт пока нет.
                     </Alert>
                   ) : (
                     <TableContainer component={Paper} variant="outlined">
@@ -296,14 +296,14 @@ export default function PostDetailPage() {
                               sx={{ alignItems: 'center', }}
                             >
                               <PersonIcon fontSize="small" />
-                              Customer
+                              Покупатель
                             </Stack>
                           </TableCell>
                           <TableCell sx={{ fontWeight: 'bold' }} align="center">
-                            Quantity
+                            Количество
                           </TableCell>
                           <TableCell sx={{ fontWeight: 'bold' }} align="right">
-                            Booked At
+                            Время брони
                           </TableCell>
                         </TableRow>
                       </TableHead>
@@ -312,42 +312,14 @@ export default function PostDetailPage() {
                           <TableRow key={booking.id} hover>
                             <TableCell>
                               <Typography
-                                variant="body2"
-                                sx={{ fontWeight: 500 }}
-                              >
-                                {booking.customer.name || 'No name'}
-                              </Typography>
-                              <Typography
-                                variant="caption"
-                                color="text.secondary"
-                              >
-                                {booking.customer.phone || booking.customer.email}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <Chip
-                                label={`×${booking.quantity}`}
-                                size="small"
-                                color="primary"
-                                variant="outlined"
-                              />
-                            </TableCell>
-                            <TableCell align="right">
-                              <Typography
-                                variant="caption"
-                                color="text.secondary"
-                              >
-                                {new Date(booking.createdAt).toLocaleString()}
-                              </Typography>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                  )}
-                </CardContent>
-            </Card>
+                  variant="body1"
+                  sx={{ color: 'text.secondary' }}
+                >
+                  {post.description}
+                </Typography>
+              )}
+            </CardContent>
+          </Card>
           )
         })}
       </Stack>

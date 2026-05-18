@@ -9,10 +9,10 @@ export default function EmptyProductsState() {
           variant="h6"
           sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}
         >
-          No Products Yet
+          Продуктов пока нет
         </Typography>
         <Typography color="textSecondary">
-          Create your first product above to get started!
+          Создайте первый продукт выше, чтобы начать!
         </Typography>
       </CardContent>
     </Card>

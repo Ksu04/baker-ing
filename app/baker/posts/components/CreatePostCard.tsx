@@ -57,7 +57,7 @@ export default function CreatePostCard({
     onError(null)
 
     if (selectedProducts.items.length === 0) {
-      onError('Select at least one product')
+      onError('Выберите хотя бы один продукт')
       return
     }
 
@@ -84,7 +84,11 @@ export default function CreatePostCard({
       handleCancel()
       onSuccess()
     } else {
-      onError((await res.json()).error)
+      try {
+        onError((await res.json()).error)
+      } catch {
+        onError('Ошибка создания поста')
+      }
     }
   }
 
@@ -158,7 +162,7 @@ export default function CreatePostCard({
                 fontSize: '1.125rem',
               }}
             >
-              Create New Post
+              Создать пост
             </Box>
             <Box
               component="span"
@@ -169,8 +173,8 @@ export default function CreatePostCard({
               }}
             >
               {isExpanded
-                ? 'Click to collapse'
-                : 'Click to expand and add a new post'}
+                ? 'Нажмите, чтобы свернуть'
+                : 'Нажмите, чтобы развернуть и добавить пост'}
             </Box>
           </Box>
         </Box>
@@ -199,8 +203,8 @@ export default function CreatePostCard({
 
               <TextField
                 fullWidth
-                label="Post Title"
-                placeholder="e.g., Fresh Chocolate Croissants"
+                label="Заголовок"
+                placeholder="например, Свежие шоколадные круассаны"
                 value={form.values.title}
                 onChange={(e) => form.setValue('title', e.target.value)}
                 required
@@ -208,8 +212,8 @@ export default function CreatePostCard({
 
               <TextField
                 fullWidth
-                label="Description"
-                placeholder="Describe your products and what's special about them..."
+                label="Описание"
+                placeholder="Опишите ваши продукты и их особенности..."
                 value={form.values.description}
                 onChange={(e) => form.setValue('description', e.target.value)}
                 multiline
@@ -218,7 +222,7 @@ export default function CreatePostCard({
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
-                  label="Pickup Date & Time"
+                  label="Дата и время самовывоза"
                   value={
                     form.values.pickupDate
                       ? dayjs(form.values.pickupDate)
@@ -238,8 +242,8 @@ export default function CreatePostCard({
                   variant="subtitle1"
                   sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}
                 >
-                  <LocalFireDepartmentIcon fontSize="small" /> Products in This
-                  Post
+                  <LocalFireDepartmentIcon fontSize="small" /> Продукты в этом
+                  посте
                 </Typography>
 
                 <Button
@@ -247,7 +251,7 @@ export default function CreatePostCard({
                   onClick={() => setProductModalOpen(true)}
                   startIcon={<AddIcon />}
                 >
-                  Select Products
+                  Выбрать продукты
                 </Button>
 
                 {selectedProducts.items.length > 0 && (
@@ -263,7 +267,7 @@ export default function CreatePostCard({
                         color: 'text.secondary',
                       }}
                     >
-                      Selected ({selectedProducts.items.length})
+                      Выбрано ({selectedProducts.items.length})
                     </Typography>
                     <Stack spacing={2}>
                       {selectedProducts.items.map((sp) => {
@@ -288,7 +292,7 @@ export default function CreatePostCard({
                                 {product?.name}
                               </Typography>
                               <TextField
-                                label="Price"
+                                label="Цена"
                                 type="number"
                                 size="small"
                                 value={sp.price}
@@ -312,7 +316,7 @@ export default function CreatePostCard({
                                 slotProps={{ input: { autoComplete: 'off' } }}
                               />
                               <TextField
-                                label="Qty"
+                                label="Кол-во"
                                 type="number"
                                 size="small"
                                 value={sp.quantity}
@@ -373,7 +377,7 @@ export default function CreatePostCard({
               />
 
               <Button type="submit" variant="contained" size="large">
-                Create Post
+                Создать пост
               </Button>
             </Stack>
           </form>

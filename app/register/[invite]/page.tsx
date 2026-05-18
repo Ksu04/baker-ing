@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   Container,
@@ -11,8 +11,10 @@ import {
   Typography,
   Alert,
   Stack,
+  CircularProgress,
 } from '@mui/material'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import BakeryDiningIcon from '@mui/icons-material/BakeryDining'
 
 export default function RegisterInvitePage({
   params,
@@ -22,21 +24,58 @@ export default function RegisterInvitePage({
   const { invite } = React.use(params)
 
   const [error, setError] = useState<string | null>(null)
+  const [type, setType] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
   const router = useRouter()
+  const isBaker = type === 'BAKER'
+
+  useEffect(() => {
+    fetch(`/api/register?invite=${invite}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => setType(data?.type ?? null))
+      .catch(() => setType(null))
+      .finally(() => setLoading(false))
+  }, [invite])
+
+  if (loading) {
+    return (
+      <Container maxWidth="sm" sx={{ py: 8, textAlign: 'center' }}>
+        <CircularProgress />
+      </Container>
+    )
+  }
+
+  if (!type) {
+    return (
+      <Container maxWidth="sm" sx={{ py: 8 }}>
+        <Card>
+          <CardContent>
+            <Typography variant="h5" sx={{ fontWeight: 600, textAlign: 'center' }}>
+              Недействительная ссылка
+            </Typography>
+          </CardContent>
+        </Card>
+      </Container>
+    )
+  }
 
   return (
     <Container maxWidth="sm" sx={{ py: 8 }}>
       <Card>
         <CardContent>
           <Box sx={{ textAlign: 'center', mb: 3 }}>
-            <PersonAddIcon
-              sx={{ fontSize: 40, color: 'primary.main', mb: 2 }}
-            />
+            {isBaker ? (
+              <BakeryDiningIcon sx={{ fontSize: 40, color: 'primary.main', mb: 2 }} />
+            ) : (
+              <PersonAddIcon sx={{ fontSize: 40, color: 'primary.main', mb: 2 }} />
+            )}
             <Typography variant="h4" sx={{ fontWeight: 600 }}>
-              Customer Registration
+              {isBaker ? 'Регистрация пекаря' : 'Регистрация покупателя'}
             </Typography>
             <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
-              Complete your registration to get started
+              {isBaker
+                ? 'Создайте аккаунт пекаря, чтобы управлять своей пекарней'
+                : 'Завершите регистрацию, чтобы начать'}
             </Typography>
           </Box>
 
@@ -56,7 +95,11 @@ export default function RegisterInvitePage({
               if (res.ok) {
                 router.push('/signin')
               } else {
-                setError((await res.json()).error)
+                try {
+                  setError((await res.json()).error)
+                } catch {
+                  setError('Ошибка регистрации')
+                }
               }
             }}
           >
@@ -65,7 +108,7 @@ export default function RegisterInvitePage({
               <TextField
                 fullWidth
                 name="name"
-                label="Full Name"
+                label="Имя"
                 type="text"
                 required
                 variant="outlined"
@@ -73,7 +116,7 @@ export default function RegisterInvitePage({
               <TextField
                 fullWidth
                 name="phone"
-                label="Phone"
+                label="Телефон"
                 type="tel"
                 required
                 variant="outlined"
@@ -89,7 +132,7 @@ export default function RegisterInvitePage({
               <TextField
                 fullWidth
                 name="password"
-                label="Password"
+                label="Пароль"
                 type="password"
                 required
                 variant="outlined"
@@ -100,9 +143,9 @@ export default function RegisterInvitePage({
                 variant="contained"
                 size="large"
                 fullWidth
-                startIcon={<PersonAddIcon />}
+                startIcon={isBaker ? <BakeryDiningIcon /> : <PersonAddIcon />}
               >
-                Register
+                {isBaker ? 'Зарегистрироваться как пекарь' : 'Зарегистрироваться'}
               </Button>
             </Stack>
           </form>

@@ -26,7 +26,7 @@ export default function BakerDashboard() {
   if (session.user?.role !== 'BAKER') {
     return (
       <Alert severity="error">
-        Unauthorized. <a href="/signin">Sign in</a>
+        Нет доступа. <a href="/signin">Войти</a>
       </Alert>
     )
   }
@@ -36,10 +36,10 @@ export default function BakerDashboard() {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>
-            🍰 Baker Dashboard
+            🍰 Панель пекаря
           </Typography>
           <Typography variant="body1" color="textSecondary">
-            Welcome, {session.user.email}
+            Добро пожаловать, {session.user.email}
           </Typography>
         </CardContent>
       </Card>
@@ -47,11 +47,10 @@ export default function BakerDashboard() {
       <Card>
         <CardContent>
           <Typography variant="h5" sx={{ mb: 3, fontWeight: 600 }}>
-            Generate Referral Link
+            Создать реферальную ссылку
           </Typography>
           <Typography variant="body2" color="textSecondary" sx={{ mb: 3 }}>
-            Create referral links for customers to register and automatically
-            subscribe to your posts.
+            Создавайте ссылки-приглашения для покупателей, чтобы они могли зарегистрироваться и автоматически подписаться на ваши посты.
           </Typography>
           <Button
             variant="contained"
@@ -69,17 +68,21 @@ export default function BakerDashboard() {
                 if (res.ok) {
                   setInvite((await res.json()).inviteUrl)
                 } else {
-                  setError((await res.json()).error)
+                  try {
+                    setError((await res.json()).error)
+                  } catch {
+                    setError('Не удалось создать ссылку')
+                  }
                 }
               } catch (err) {
-                setError('Failed to generate invite')
+                setError('Не удалось создать ссылку')
               } finally {
                 setLoading(false)
               }
             }}
             disabled={loading}
           >
-            Generate Invite Link
+            Создать ссылку
           </Button>
 
           {invite && (
@@ -92,7 +95,7 @@ export default function BakerDashboard() {
               }}
             >
               <Typography variant="body2" sx={{ mb: 2, fontWeight: 500 }}>
-                Share this link with customers:
+                Поделитесь этой ссылкой с покупателями:
               </Typography>
               <Box
                 sx={{
@@ -114,7 +117,7 @@ export default function BakerDashboard() {
                   }}
                   sx={{ color: 'inherit' }}
                 >
-                  Copy
+                  Копировать
                 </Button>
               </Box>
             </Paper>

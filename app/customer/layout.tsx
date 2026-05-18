@@ -18,8 +18,8 @@ import { signOut } from 'next-auth/react'
 const drawerWidth = 240
 
 const menuItems = [
-  { label: "My Baker's Posts", href: '/customer', icon: ShoppingBagIcon },
-  { label: 'My Bookings', href: '/customer/bookings', icon: LocalShippingIcon },
+  { label: 'Посты пекарей', href: '/customer', icon: ShoppingBagIcon },
+  { label: 'Мои брони', href: '/customer/bookings', icon: LocalShippingIcon },
 ]
 
 export default function CustomerLayout({
@@ -45,7 +45,7 @@ export default function CustomerLayout({
           <Box
             sx={{ fontSize: '1.25rem', fontWeight: 700, color: '#000000' }}
           >
-            🛍️ Customer
+            🛍️ Покупатель
           </Box>
         </Box>
         <List sx={{ flex: 1 }}>
@@ -80,7 +80,7 @@ export default function CustomerLayout({
             startIcon={<LogoutIcon />}
             onClick={() => signOut()}
           >
-            Sign Out
+            Выйти
           </Button>
         </Box>
       </Drawer>

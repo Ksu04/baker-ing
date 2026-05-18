@@ -34,11 +34,19 @@ export async function requireCustomer(): Promise<Session> {
 }
 
 export async function getBakerProfile(userId: string) {
-  const baker = await prisma.bakerProfile.findUnique({
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  })
+  if (!user) {
+    throw errorResponse('User not found', 401)
+  }
+  let baker = await prisma.bakerProfile.findUnique({
     where: { userId },
   })
   if (!baker) {
-    throw errorResponse('Not a baker', 401)
+    baker = await prisma.bakerProfile.create({
+      data: { userId },
+    })
   }
   return baker
 }

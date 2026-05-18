@@ -20,7 +20,7 @@ export async function signInAction({
     return { success: true }
   } catch (err) {
     if (err instanceof AuthError) {
-      return { error: 'Invalid email or password' }
+      return { error: 'Неверный email или пароль' }
     }
     throw err
   }

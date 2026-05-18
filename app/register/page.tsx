@@ -8,11 +8,10 @@ export default function RegisterPage() {
         <CardContent>
           <Box sx={{ textAlign: 'center', mb: 3 }}>
             <Typography variant="h4" sx={{ fontWeight: 600 }}>
-              Registration Unavailable
+              Регистрация недоступна
             </Typography>
             <Typography variant="body1" color="textSecondary" sx={{ mt: 2 }}>
-              Registration requires a referral link. Please contact a baker for
-              an invitation.
+              Для регистрации требуется ссылка-приглашение от пекаря.
             </Typography>
           </Box>
         </CardContent>

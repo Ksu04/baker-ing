@@ -67,7 +67,7 @@ export default function ProductsPage() {
   if (status === 'loading' || status === 'unauthenticated')
     return <CircularProgress sx={{ mt: 4 }} />
   if (session?.user?.role !== 'BAKER') {
-    return <Alert severity="error">Unauthorized</Alert>
+    return <Alert severity="error">Нет доступа</Alert>
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -109,7 +109,11 @@ export default function ProductsPage() {
       const updated = await fetch('/api/products').then((r) => r.json())
       setProducts(updated)
     } else {
-      setError((await res.json()).error)
+      try {
+        setError((await res.json()).error)
+      } catch {
+        setError('Ошибка создания продукта')
+      }
     }
   }
 
@@ -231,7 +235,7 @@ export default function ProductsPage() {
         variant="h5"
         sx={{ mb: 3, fontWeight: 600, color: '#000000' }}
       >
-        📦 Your Products ({products.length})
+        📦 Ваши продукты ({products.length})
       </Typography>
 
       <ProductGrid

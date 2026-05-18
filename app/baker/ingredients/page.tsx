@@ -57,7 +57,7 @@ export default function IngredientsPage() {
   if (status === 'loading' || status === 'unauthenticated')
     return <CircularProgress sx={{ mt: 4 }} />
   if (session?.user?.role !== 'BAKER') {
-    return <Alert severity="error">Unauthorized</Alert>
+    return <Alert severity="error">Нет доступа</Alert>
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -81,7 +81,11 @@ export default function IngredientsPage() {
       const updated = await fetch('/api/ingredients').then((r) => r.json())
       setIngredients(updated)
     } else {
-      setError((await res.json()).error)
+      try {
+        setError((await res.json()).error)
+      } catch {
+        setError('Ошибка сохранения ингредиента')
+      }
     }
   }
 
@@ -103,15 +107,15 @@ export default function IngredientsPage() {
       <Card sx={{ mb: 4 }}>
         <CardContent>
           <Typography variant="h4" sx={{ mb: 3, fontWeight: 600 }}>
-            🥄 Manage Ingredients
+            🥄 Управление ингредиентами
           </Typography>
 
           <form onSubmit={handleSubmit}>
             <Stack spacing={2} sx={{ mb: 2 }}>
               <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                 <TextField
-                  label="Ingredient Name"
-                  placeholder="e.g., Flour"
+                  label="Название"
+                  placeholder="например, Мука"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -119,7 +123,7 @@ export default function IngredientsPage() {
                   sx={{ minWidth: 150, flex: 1 }}
                 />
                 <TextField
-                  label="Quantity"
+                  label="Количество"
                   type="number"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
@@ -130,7 +134,7 @@ export default function IngredientsPage() {
                 />
                 <TextField
                   select
-                  label="Metric"
+                  label="Ед. изм."
                   value={metric}
                   onChange={(e) => setMetric(e.target.value)}
                   size="small"
@@ -152,7 +156,7 @@ export default function IngredientsPage() {
                   variant="contained"
                   startIcon={<AddIcon />}
                 >
-                  {editing ? 'Update' : 'Add'}
+                  {editing ? 'Обновить' : 'Добавить'}
                 </Button>
                 {editing && (
                   <Button
@@ -165,7 +169,7 @@ export default function IngredientsPage() {
                       setMetric('g')
                     }}
                   >
-                    Cancel
+                    Отмена
                   </Button>
                 )}
               </Box>
@@ -179,12 +183,12 @@ export default function IngredientsPage() {
           <Table>
             <TableHead sx={{ backgroundColor: '#FFECB7' }}>
               <TableRow>
-                <TableCell sx={{ fontWeight: 600 }}>Name</TableCell>
+                <TableCell sx={{ fontWeight: 600 }}>Название</TableCell>
                 <TableCell align="right" sx={{ fontWeight: 600 }}>
-                  Quantity
+                  Количество
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: 600 }}>
-                  Actions
+                  Действия
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -222,28 +226,27 @@ export default function IngredientsPage() {
         <Card>
           <CardContent sx={{ textAlign: 'center', py: 4 }}>
             <Typography color="textSecondary">
-              No ingredients yet. Add one to get started!
+              Ингредиентов пока нет. Добавьте первый, чтобы начать!
             </Typography>
           </CardContent>
         </Card>
       )}
 
       <Dialog open={deleteId !== null} onClose={() => setDeleteId(null)}>
-        <DialogTitle>Delete Ingredient?</DialogTitle>
+        <DialogTitle>Удалить ингредиент?</DialogTitle>
         <DialogContent>
           <Typography>
-            Are you sure you want to delete this ingredient? This action cannot
-            be undone.
+            Вы уверены, что хотите удалить этот ингредиент? Это действие нельзя отменить.
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteId(null)}>Cancel</Button>
+          <Button onClick={() => setDeleteId(null)}>Отмена</Button>
           <Button
             onClick={() => deleteId && handleDelete(deleteId)}
             color="error"
             variant="contained"
           >
-            Delete
+            Удалить
           </Button>
         </DialogActions>
       </Dialog>

@@ -27,7 +27,7 @@ export default function AuthHeader() {
           }}
         >
           <Typography variant="h6" sx={{ cursor: 'pointer', fontWeight: 700 }}>
-            Bakery Marketplace
+            Baker-Ing
           </Typography>
         </Link>
 
@@ -49,13 +49,13 @@ export default function AuthHeader() {
                 startIcon={<LogoutIcon />}
                 onClick={() => signOut({ callbackUrl: '/' })}
               >
-                Sign out
+                Выйти
               </Button>
             </>
           ) : (
             <Link href="/signin" style={{ textDecoration: 'none' }}>
               <Button color="inherit" variant="text" startIcon={<LoginIcon />}>
-                Sign in
+                Войти
               </Button>
             </Link>
           )}

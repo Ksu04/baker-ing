@@ -14,10 +14,10 @@ export default function PostHeader() {
       <CardContent>
         <Box>
           <Typography variant="h4" sx={{ mb: 0.5, fontWeight: 700 }}>
-            📝 Posts Management
+            📝 Управление постами
           </Typography>
           <Typography variant="body1" sx={{ opacity: 0.9 }}>
-            Create and manage your bakery product posts
+            Создавайте и управляйте постами вашей пекарни
           </Typography>
         </Box>
       </CardContent>

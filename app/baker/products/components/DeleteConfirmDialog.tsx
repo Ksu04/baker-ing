@@ -21,17 +21,16 @@ export default function DeleteConfirmDialog({
 }: DeleteConfirmDialogProps) {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Delete Product?</DialogTitle>
+      <DialogTitle>Удалить продукт?</DialogTitle>
       <DialogContent>
         <Typography>
-          Are you sure you want to delete this product? This action cannot be
-          undone.
+          Вы уверены, что хотите удалить этот продукт? Это действие нельзя отменить.
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>Отмена</Button>
         <Button color="error" variant="contained" onClick={onConfirm}>
-          Delete
+          Удалить
         </Button>
       </DialogActions>
     </Dialog>

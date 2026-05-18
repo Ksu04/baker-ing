@@ -81,7 +81,7 @@ export default function PostsPage() {
   if (session?.user?.role !== 'BAKER') {
     return (
       <Container maxWidth="md" sx={{ pt: 4 }}>
-        <Alert severity="error">Unauthorized</Alert>
+        <Alert severity="error">Нет доступа</Alert>
       </Container>
     )
   }

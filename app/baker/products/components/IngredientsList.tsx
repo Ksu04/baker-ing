@@ -54,17 +54,16 @@ export default function IngredientsList({
             color: '#000000',
           }}
         >
-          🥯 Select Ingredients
+          🥯 Выбрать ингредиенты
         </Typography>
         <Typography variant="caption" color="textSecondary">
-          {selectedIngredients.length} selected
+          выбрано: {selectedIngredients.length}
         </Typography>
       </Box>
 
       {ingredients.length === 0 ? (
         <Alert severity="warning" sx={{ mb: 2, bgcolor: '#FFECB7', color: '#000000' }}>
-          No ingredients available. Create some in the Ingredients section
-          first.
+          Нет доступных ингредиентов. Создайте их в разделе «Ингредиенты».
         </Alert>
       ) : (
         <Box

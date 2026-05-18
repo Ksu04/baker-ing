@@ -91,7 +91,7 @@ export default function ProductCard({
                 color: 'text.secondary',
               }}
             >
-              Ingredients ({product.ingredients.length}):
+              Ингредиенты ({product.ingredients.length}):
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {product.ingredients.map((i) => (
@@ -111,7 +111,7 @@ export default function ProductCard({
             color="textSecondary"
             sx={{ mb: 2, fontStyle: 'italic' }}
           >
-            No ingredients added
+            Ингредиенты не добавлены
           </Typography>
         )}
         <Stack direction="row" spacing={1} sx={{ mt: 'auto' }}>
@@ -122,7 +122,7 @@ export default function ProductCard({
             onClick={() => onEdit(product)}
             fullWidth
           >
-            Edit
+            Редактировать
           </Button>
           <Button
             size="small"
@@ -132,7 +132,7 @@ export default function ProductCard({
             onClick={() => onDelete(product.id)}
             fullWidth
           >
-            Delete
+            Удалить
           </Button>
         </Stack>
       </CardContent>

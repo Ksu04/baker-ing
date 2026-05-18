@@ -107,17 +107,17 @@ export default function NotificationBell() {
       >
         <Box sx={{ width: 320, maxHeight: 400, p: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-            <Typography variant="h6">Notifications</Typography>
+            <Typography variant="h6">Уведомления</Typography>
             {unreadCount > 0 && (
               <Button size="small" onClick={markAllAsRead}>
-                Mark all read
+                Прочитать все
               </Button>
             )}
           </Box>
           <Divider />
           {notifications.length === 0 ? (
             <Typography sx={{ p: 2, textAlign: 'center', color: 'text.secondary' }}>
-              No notifications
+              Нет уведомлений
             </Typography>
           ) : (
             <List sx={{ maxHeight: 300, overflow: 'auto' }}>

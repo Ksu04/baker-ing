@@ -69,7 +69,7 @@ export default function ProductFormToggle({
                 fontSize: '1.125rem',
               }}
             >
-              {isEditing ? 'Editing Product' : 'Create New Product'}
+              {isEditing ? 'Редактирование продукта' : 'Создать продукт'}
             </Box>
             <Box
               component="span"
@@ -80,8 +80,8 @@ export default function ProductFormToggle({
               }}
             >
               {showForm
-                ? 'Click to collapse'
-                : 'Click to expand and add a new product'}
+                ? 'Нажмите, чтобы свернуть'
+                : 'Нажмите, чтобы развернуть'}
             </Box>
           </Box>
         </Box>

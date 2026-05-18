@@ -68,7 +68,7 @@ export default function ProductSelectionModal({
       >
         <Box sx={{ p: 3, borderBottom: 1, borderColor: 'divider' }}>
           <Stack direction="row" sx={{ mb: 2 }}>
-            <Typography variant="h6">Select Your Products</Typography>
+            <Typography variant="h6">Выберите продукты</Typography>
             <IconButton onClick={onClose}>
               <CloseIcon />
             </IconButton>
@@ -76,7 +76,7 @@ export default function ProductSelectionModal({
           <TextField
             fullWidth
             size="small"
-            placeholder="Search products by name..."
+            placeholder="Поиск продуктов по названию..."
             value={productSearch}
             onChange={(e) => onProductSearchChange(e.target.value)}
             slotProps={{
@@ -94,7 +94,7 @@ export default function ProductSelectionModal({
             {filteredProducts.length === 0 ? (
               <Paper sx={{ p: 4, textAlign: 'center' }}>
                 <Typography color="text.secondary">
-                  No products found. Try a different search term.
+                  Ничего не найдено. Попробуйте другой запрос.
                 </Typography>
               </Paper>
             ) : (
@@ -187,7 +187,7 @@ export default function ProductSelectionModal({
                               fontSize: '0.7rem',
                             }}
                           >
-                            Ingredients:
+                            Ингредиенты:
                           </Typography>
                           <Stack direction="row" spacing={0.5}>
                             {p.ingredients.slice(0, 5).map((ing) => (
@@ -200,7 +200,7 @@ export default function ProductSelectionModal({
                             ))}
                             {p.ingredients.length > 5 && (
                               <Chip
-                                label={`+${p.ingredients.length - 5} more`}
+                                label={`+${p.ingredients.length - 5} ещё`}
                                 size="small"
                                 variant="outlined"
                               />
@@ -227,12 +227,12 @@ export default function ProductSelectionModal({
           }}
         >
           <Chip
-            label={`${selectedProducts.items.length} product${selectedProducts.items.length !== 1 ? 's' : ''} selected`}
+            label={`Выбрано: ${selectedProducts.items.length}`}
             color={selectedProducts.items.length > 0 ? 'primary' : 'default'}
             icon={<ShoppingCartIcon />}
           />
           <Button variant="contained" onClick={onClose}>
-            Done
+            Готово
           </Button>
         </Box>
       </Box>

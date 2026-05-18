@@ -50,7 +50,7 @@ export default function PostCard({ post, isExpired, onDelete }: PostCardProps) {
                 {post.title}
               </Typography>
               {isExpired(post.pickupDate) && (
-                <Chip label="Expired" color="error" size="small" />
+                <Chip label="Просрочен" color="error" size="small" />
               )}
             </Stack>
             <Stack
@@ -86,7 +86,7 @@ export default function PostCard({ post, isExpired, onDelete }: PostCardProps) {
               href={`/baker/posts/${post.id}`}
               size="small"
             >
-              View Bookings
+              Просмотр броней
             </Button>
             <Button
               variant="outlined"
@@ -95,7 +95,7 @@ export default function PostCard({ post, isExpired, onDelete }: PostCardProps) {
               onClick={() => onDelete(post.id)}
               size="small"
             >
-              Delete
+              Удалить
             </Button>
           </Stack>
         </Stack>
@@ -114,7 +114,7 @@ export default function PostCard({ post, isExpired, onDelete }: PostCardProps) {
                 color: 'text.secondary',
               }}
             >
-              Products ({post.products.length})
+              Продукты ({post.products.length})
             </Typography>
             <Stack spacing={2}>
               {post.products.map((pp) => (
@@ -205,11 +205,11 @@ export default function PostCard({ post, isExpired, onDelete }: PostCardProps) {
                                 : 'text.secondary',
                           }}
                         >
-                          Available: <strong>{pp.availableQuantity}</strong> /{' '}
+                          Доступно: <strong>{pp.availableQuantity}</strong> /{' '}
                           {pp.totalQuantity}
                         </Typography>
                         {pp.availableQuantity === 0 && (
-                          <Chip label="Sold out" size="small" color="error" />
+                          <Chip label="Распродано" size="small" color="error" />
                         )}
                       </Stack>
                     </Box>

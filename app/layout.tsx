@@ -4,6 +4,7 @@ import './globals.css'
 import AuthHeader from '@/app/components/AuthHeader'
 import ThemeRegistry from '@/app/components/ThemeRegistry'
 import { SessionProvider } from 'next-auth/react'
+import { auth } from '@/auth'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -16,17 +17,18 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Bakery Marketplace',
-  description: 'A marketplace for bakers and customers',
+  title: 'Baker-Ing',
+  description: 'Маркетплейс для пекарей и покупателей',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const session = await auth()
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <SessionProvider>
+        <SessionProvider session={session}>
           <ThemeRegistry>
             <AuthHeader />
             <main>{children}</main>

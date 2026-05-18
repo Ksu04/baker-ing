@@ -21,19 +21,18 @@ export default function DeleteConfirmDialog({
 }: DeleteConfirmDialogProps) {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-      <DialogTitle sx={{ fontWeight: 700 }}>Confirm Delete</DialogTitle>
+      <DialogTitle sx={{ fontWeight: 700 }}>Подтверждение удаления</DialogTitle>
       <DialogContent>
         <Typography sx={{ mt: 1 }}>
-          Are you sure you want to delete this post? This action cannot be
-          undone.
+          Вы уверены, что хотите удалить этот пост? Это действие нельзя отменить.
         </Typography>
       </DialogContent>
       <DialogActions sx={{ p: 2 }}>
         <Button onClick={onClose} variant="outlined">
-          Cancel
+          Отмена
         </Button>
         <Button onClick={onConfirm} color="error" variant="contained">
-          Delete
+          Удалить
         </Button>
       </DialogActions>
     </Dialog>

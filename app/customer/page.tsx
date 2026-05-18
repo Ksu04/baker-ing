@@ -142,13 +142,13 @@ export default function CustomerPage() {
     })
 
     if (res.ok) {
-      setSuccess('Booking successful!')
+      setSuccess('Бронь оформлена!')
       setQuantities({})
       setBookingPostId(null)
       loadPosts()
     } else {
       const data = await res.json()
-      setError(data.error || 'Booking failed')
+      setError(data.error || 'Ошибка бронирования')
       setBookingPostId(null)
     }
   }
@@ -187,7 +187,7 @@ export default function CustomerPage() {
   if (session?.user?.role !== 'CUSTOMER') {
     return (
       <Container maxWidth="md" sx={{ pt: 4 }}>
-        <Alert severity="error">Please sign in as a customer.</Alert>
+        <Alert severity="error">Пожалуйста, войдите как покупатель.</Alert>
       </Container>
     )
   }
@@ -199,10 +199,10 @@ export default function CustomerPage() {
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ textAlign: 'center', mb: 4 }}>
         <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1 }}>
-          🍰 Fresh from your Bakers
+          🍰 Свежее от ваших пекарей
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Browse and book delicious treats from your favorite bakers
+          Просматривайте и заказывайте вкусные угощения от любимых пекарей
         </Typography>
       </Box>
 
@@ -222,7 +222,7 @@ export default function CustomerPage() {
           <CircularProgress />
         </Box>
       ) : activePosts.length === 0 ? (
-        <Alert severity="info">No active posts yet. Check back later! 👨‍🍳</Alert>
+        <Alert severity="info">Активных постов пока нет. Загляните позже! 👨‍🍳</Alert>
       ) : (
         <Stack spacing={4}>
           {activePosts.map((post) => (
@@ -245,14 +245,14 @@ export default function CustomerPage() {
                       variant="subtitle1"
                       sx={{ fontWeight: 600, color: 'text.secondary' }}
                     >
-                      {post.bakerProfile.user.name || 'Local Baker'}
+                      {post.bakerProfile.user.name || 'Местный пекарь'}
                     </Typography>
                     <Divider orientation="vertical" flexItem />
                     <CalendarMonthIcon
                       sx={{ fontSize: 18, color: 'text.secondary' }}
                     />
                     <Typography variant="body2" color="text.secondary">
-                      Pickup: {new Date(post.pickupDate).toLocaleString()}
+                      Самовывоз: {new Date(post.pickupDate).toLocaleString()}
                     </Typography>
                   </Stack>
                 </Box>
@@ -363,8 +363,8 @@ export default function CustomerPage() {
                                       }
                                     >
                                       {pp.availableQuantity > 0
-                                        ? `${pp.availableQuantity} of ${pp.totalQuantity} available`
-                                        : '❌ Sold out'}
+                                        ? `${pp.availableQuantity} из ${pp.totalQuantity} доступно`
+                                        : '❌ Распродано'}
                                     </Typography>
                                   </Stack>
                                   {pp.availableQuantity > 0 && (
@@ -391,8 +391,7 @@ export default function CustomerPage() {
                           disabled={bookingPostId === post.id}
                           sx={{ py: 1.5, fontWeight: 700 }}
                         >
-                          Book {getTotalItems(post.id)} item
-                          {getTotalItems(post.id) > 1 ? 's' : ''} (${getTotalPrice(post.id).toFixed(2)})
+                          Заказать ({getTotalItems(post.id)} шт.) — ${getTotalPrice(post.id).toFixed(2)}
                         </Button>
                       )}
                     </Stack>

@@ -39,7 +39,7 @@ export default function SignInPage() {
           <Box sx={{ textAlign: 'center', mb: 3 }}>
             <LoginIcon sx={{ fontSize: 40, color: 'primary.main', mb: 2 }} />
             <Typography variant="h4" sx={{ fontWeight: 600 }}>
-              Sign In
+              Вход
             </Typography>
           </Box>
 
@@ -54,7 +54,7 @@ export default function SignInPage() {
               const result = await signInAction({ email, password })
 
               if (result?.error) {
-                setError('Invalid email or password')
+                setError('Неверный email или пароль')
               } else {
                 await update()
               }
@@ -72,7 +72,7 @@ export default function SignInPage() {
               <TextField
                 fullWidth
                 name="password"
-                label="Password"
+                label="Пароль"
                 type="password"
                 required
                 variant="outlined"
@@ -85,7 +85,7 @@ export default function SignInPage() {
                 fullWidth
                 startIcon={<LoginIcon />}
               >
-                Sign In
+                Войти
               </Button>
             </Stack>
           </form>
@@ -99,7 +99,7 @@ export default function SignInPage() {
             }}
           >
             <Typography variant="body2" color="textSecondary">
-              New customer? Ask your baker for a referral link.
+              Новый покупатель? Попросите у пекаря ссылку для регистрации.
             </Typography>
           </Box>
         </CardContent>

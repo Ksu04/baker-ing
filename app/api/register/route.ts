@@ -2,13 +2,27 @@ import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import bcrypt from 'bcrypt'
 
+export async function GET(req: NextRequest) {
+  const invite = req.nextUrl.searchParams.get('invite')
+  if (!invite) {
+    return NextResponse.json({ error: 'Missing invite' }, { status: 400 })
+  }
+  const token = await prisma.inviteToken.findUnique({
+    where: { code: invite },
+    select: { type: true, active: true },
+  })
+  if (!token || !token.active) {
+    return NextResponse.json({ error: 'Invalid invite' }, { status: 404 })
+  }
+  return NextResponse.json({ type: token.type })
+}
+
 export async function POST(req: NextRequest) {
   const { invite, name, phone, email, password } = await req.json()
   if (!invite || !name || !email || !password) {
     return NextResponse.json({ error: 'Missing data' }, { status: 400 })
   }
 
-  // Find valid invite (active and not expired)
   const inviteToken = await prisma.inviteToken.findUnique({
     where: { code: invite, active: true },
     include: { baker: true },
@@ -27,6 +41,28 @@ export async function POST(req: NextRequest) {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10)
+
+  if (inviteToken.type === 'BAKER') {
+    try {
+      await prisma.user.create({
+        data: {
+          name,
+          phone,
+          email,
+          password: hashedPassword,
+          role: 'BAKER',
+          bakerProfile: { create: {} },
+        },
+      })
+    } catch (err) {
+      return NextResponse.json(
+        { error: 'Failed to create baker.' },
+        { status: 500 }
+      )
+    }
+    return NextResponse.json({ success: true })
+  }
+
   let customerUser
   try {
     customerUser = await prisma.user.create({
@@ -36,9 +72,7 @@ export async function POST(req: NextRequest) {
         email,
         password: hashedPassword,
         role: 'CUSTOMER',
-        customerProfile: {
-          create: {},
-        },
+        customerProfile: { create: {} },
       },
       include: { customerProfile: true },
     })
@@ -49,7 +83,6 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // Connect subscription to baker
   await prisma.subscription.create({
     data: {
       customerId: customerUser.customerProfile.id,

@@ -50,13 +50,13 @@ export default function ImageUpload({
         <Box
           component="img"
           src={photo}
-          alt="Preview"
+          alt="Превью"
           sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
       ) : (
         <Box sx={{ textAlign: 'center', color: 'text.secondary', p: 2 }}>
           <AddIcon sx={{ fontSize: 48, mb: 1, opacity: 0.5 }} />
-          <Typography variant="body2">Click to upload</Typography>
+          <Typography variant="body2">Нажмите для загрузки</Typography>
         </Box>
       )}
       <input

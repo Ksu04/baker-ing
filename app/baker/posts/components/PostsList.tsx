@@ -45,10 +45,10 @@ export default function PostsList({
             variant="h6"
             sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}
           >
-            No Posts Yet
+            Постов пока нет
           </Typography>
           <Typography color="textSecondary">
-            Create your first post above to start selling!
+            Создайте первый пост выше, чтобы начать продавать!
           </Typography>
         </CardContent>
       </Card>

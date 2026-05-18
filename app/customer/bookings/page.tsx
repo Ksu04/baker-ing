@@ -51,7 +51,7 @@ export default function CustomerBookingsPage() {
   if (session.user?.role !== 'CUSTOMER') {
     return (
       <Container maxWidth="md" sx={{ pt: 4 }}>
-        <Alert severity="error">Please sign in as a customer.</Alert>
+        <Alert severity="error">Пожалуйста, войдите как покупатель.</Alert>
       </Container>
     )
   }
@@ -62,7 +62,7 @@ export default function CustomerBookingsPage() {
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Typography variant="h4" component="h1" sx={{ mb: 4, fontWeight: 700 }}>
-        My Bookings
+        Мои брони
       </Typography>
 
       {loading ? (
@@ -70,7 +70,7 @@ export default function CustomerBookingsPage() {
           <CircularProgress />
         </Box>
       ) : bookings.length === 0 ? (
-        <Alert severity="info">No bookings yet. Browse posts to find delicious treats!</Alert>
+        <Alert severity="info">Броней пока нет. Просмотрите посты, чтобы найти вкусные угощения!</Alert>
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           {bookings.map((booking) => (
@@ -90,7 +90,7 @@ export default function CustomerBookingsPage() {
                           {booking.postTitle}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          by {booking.baker.name || 'Baker'}
+                          от {booking.baker.name || 'Пекаря'}
                         </Typography>
                       </Box>
                     </Box>
@@ -110,7 +110,7 @@ export default function CustomerBookingsPage() {
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <EventNoteIcon fontSize="small" color="primary" />
                     <Typography variant="body2">
-                      Pickup:{' '}
+                      Самовывоз:{' '}
                       <strong>
                         {new Date(booking.pickupDate).toLocaleDateString('en-US', {
                           weekday: 'long',
@@ -126,7 +126,7 @@ export default function CustomerBookingsPage() {
                   <Divider />
 
                   <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                    Ordered Items ({booking.items.length}):
+                    Заказанные товары ({booking.items.length}):
                   </Typography>
 
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -213,10 +213,10 @@ export default function CustomerBookingsPage() {
 
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pt: 1 }}>
                     <Typography variant="caption" color="text.secondary">
-                      Booked: {new Date(booking.createdAt).toLocaleString()}
+                      Забронировано: {new Date(booking.createdAt).toLocaleString()}
                     </Typography>
                     <Typography variant="body2">
-                      Total: <strong>{booking.items.reduce((s, i) => s + i.quantity, 0)} items</strong>
+                      Итого: <strong>{booking.items.reduce((s, i) => s + i.quantity, 0)} шт.</strong>
                     </Typography>
                   </Box>
                 </Box>
