@@ -51,7 +51,7 @@ export default function IngredientsList({
             fontWeight: 700,
             textTransform: 'uppercase',
             fontSize: '0.75rem',
-            color: 'primary.main',
+            color: '#000000',
           }}
         >
           🥯 Select Ingredients
@@ -62,7 +62,7 @@ export default function IngredientsList({
       </Box>
 
       {ingredients.length === 0 ? (
-        <Alert severity="info" sx={{ mb: 2 }}>
+        <Alert severity="warning" sx={{ mb: 2, bgcolor: '#FFECB7', color: '#000000' }}>
           No ingredients available. Create some in the Ingredients section
           first.
         </Alert>

@@ -8,7 +8,7 @@ export default function PostHeader() {
         mb: 4,
         background: (theme) =>
           `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
-        color: 'white',
+        color: '#000000',
       }}
     >
       <CardContent>

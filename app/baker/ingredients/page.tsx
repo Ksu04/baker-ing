@@ -49,7 +49,7 @@ export default function IngredientsPage() {
   useEffect(() => {
     if (session?.user?.role === 'BAKER') {
       fetch('/api/ingredients')
-        .then((r) => r.json())
+        .then((r) => (r.ok ? r.json() : []))
         .then(setIngredients)
     }
   }, [session])
@@ -177,7 +177,7 @@ export default function IngredientsPage() {
       {ingredients.length > 0 ? (
         <TableContainer component={Paper}>
           <Table>
-            <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
+            <TableHead sx={{ backgroundColor: '#FFECB7' }}>
               <TableRow>
                 <TableCell sx={{ fontWeight: 600 }}>Name</TableCell>
                 <TableCell align="right" sx={{ fontWeight: 600 }}>

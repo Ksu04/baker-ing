@@ -94,7 +94,7 @@ export default function SignInPage() {
             sx={{
               mt: 3,
               pt: 2,
-              borderTop: '1px solid #eee',
+              borderTop: '1px solid #E0E0E0',
               textAlign: 'center',
             }}
           >

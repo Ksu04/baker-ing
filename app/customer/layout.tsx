@@ -43,7 +43,7 @@ export default function CustomerLayout({
       >
         <Box sx={{ p: 2 }}>
           <Box
-            sx={{ fontSize: '1.25rem', fontWeight: 700, color: 'primary.main' }}
+            sx={{ fontSize: '1.25rem', fontWeight: 700, color: '#000000' }}
           >
             🛍️ Customer
           </Box>
@@ -72,7 +72,7 @@ export default function CustomerLayout({
             )
           })}
         </List>
-        <Box sx={{ p: 2, borderTop: '1px solid #eee' }}>
+        <Box sx={{ p: 2, borderTop: '1px solid #E0E0E0' }}>
           <Button
             fullWidth
             variant="outlined"

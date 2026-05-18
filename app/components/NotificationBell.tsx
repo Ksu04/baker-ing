@@ -34,6 +34,11 @@ export default function NotificationBell() {
   const fetchNotifications = useCallback(async () => {
     try {
       const res = await fetch('/api/notifications')
+      if (!res.ok) {
+        setNotifications([])
+        setUnreadCount(0)
+        return
+      }
       const data = await res.json()
       setNotifications(data)
       setUnreadCount(data.filter((n: Notification) => !n.read).length)

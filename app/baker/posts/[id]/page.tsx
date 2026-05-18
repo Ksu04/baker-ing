@@ -71,7 +71,7 @@ export default function PostDetailPage() {
   useEffect(() => {
     if (session?.user?.role === 'BAKER' && postId) {
       fetch(`/api/posts/${postId}`)
-        .then((r) => r.json())
+        .then((r) => (r.ok ? r.json() : { error: 'Failed to load' }))
         .then((data) => {
           if (data.error) {
             setError(data.error)
@@ -199,7 +199,7 @@ export default function PostDetailPage() {
               <Box sx={{ textAlign: 'right' }}>
                 <Typography
                   variant="h6"
-                  color="primary.main"
+                  color="#000000"
                   sx={{ fontWeight: 'bold' }}
                 >
                   {totalBookings} / {totalQuantity}
@@ -258,7 +258,7 @@ export default function PostDetailPage() {
                       </Typography>
                       <Typography
                         variant="subtitle1"
-                        color="primary.main"
+                        color="#000000"
                         sx={{ fontWeight: 'bold' }}
                       >
                         ${pp.price.toFixed(2)}

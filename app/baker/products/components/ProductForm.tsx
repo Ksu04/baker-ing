@@ -92,7 +92,7 @@ export default function ProductForm({
               fontWeight: 700,
               textTransform: 'uppercase',
               fontSize: '0.75rem',
-              color: 'primary.main',
+              color: '#000000',
             }}
           >
             Product Details

@@ -20,7 +20,7 @@ export default async function Home() {
       <Box sx={{ textAlign: 'center' }}>
         <Typography
           variant="h2"
-          sx={{ mb: 4, fontWeight: 700, color: 'primary.main' }}
+          sx={{ mb: 4, fontWeight: 700, color: '#000000' }}
         >
           🍰 Bakery Marketplace
         </Typography>

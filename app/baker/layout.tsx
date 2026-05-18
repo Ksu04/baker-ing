@@ -54,7 +54,7 @@ export default function BakerLayout({
       >
         <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box
-            sx={{ fontSize: '1.25rem', fontWeight: 700, color: 'primary.main' }}
+            sx={{ fontSize: '1.25rem', fontWeight: 700, color: '#000000' }}
           >
             🍰 Bakery
           </Box>
@@ -84,7 +84,7 @@ export default function BakerLayout({
             )
           })}
         </List>
-        <Box sx={{ p: 2, borderTop: '1px solid #eee' }}>
+        <Box sx={{ p: 2, borderTop: '1px solid #E0E0E0' }}>
           <Button
             fullWidth
             variant="outlined"

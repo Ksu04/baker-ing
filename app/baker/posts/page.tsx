@@ -41,8 +41,8 @@ export default function PostsPage() {
   const loadData = () => {
     setLoading(true)
     Promise.all([
-      fetch('/api/posts').then((r) => r.json()),
-      fetch('/api/products').then((r) => r.json()),
+      fetch('/api/posts').then((r) => (r.ok ? r.json() : [])),
+      fetch('/api/products').then((r) => (r.ok ? r.json() : [])),
     ]).then(([p, prods]) => {
       setPosts(p)
       setProducts(prods)

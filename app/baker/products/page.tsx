@@ -55,8 +55,8 @@ export default function ProductsPage() {
   useEffect(() => {
     if (session?.user?.role === 'BAKER') {
       Promise.all([
-        fetch('/api/products').then((r) => r.json()),
-        fetch('/api/ingredients').then((r) => r.json()),
+        fetch('/api/products').then((r) => (r.ok ? r.json() : [])),
+        fetch('/api/ingredients').then((r) => (r.ok ? r.json() : [])),
       ]).then(([p, i]) => {
         setProducts(p)
         setIngredients(i)
@@ -229,7 +229,7 @@ export default function ProductsPage() {
 
       <Typography
         variant="h5"
-        sx={{ mb: 3, fontWeight: 600, color: 'primary.main' }}
+        sx={{ mb: 3, fontWeight: 600, color: '#000000' }}
       >
         📦 Your Products ({products.length})
       </Typography>

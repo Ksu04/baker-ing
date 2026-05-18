@@ -17,7 +17,7 @@ export default function InvitesPage() {
   useEffect(() => {
     if (session?.user?.role === 'BAKER') {
       fetch('/api/invite')
-        .then((r) => r.json())
+        .then((r) => (r.ok ? r.json() : []))
         .then(setInvites)
     }
   }, [session])
@@ -70,7 +70,7 @@ export default function InvitesPage() {
 
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
-          <tr style={{ borderBottom: '1px solid #ccc' }}>
+          <tr style={{ borderBottom: '1px solid #D4A843' }}>
             <th style={{ textAlign: 'left' }}>Code</th>
             <th style={{ textAlign: 'left' }}>Created</th>
             <th style={{ textAlign: 'center' }}>Active</th>
@@ -79,7 +79,7 @@ export default function InvitesPage() {
         </thead>
         <tbody>
           {invites.map((invite) => (
-            <tr key={invite.id} style={{ borderBottom: '1px solid #eee' }}>
+            <tr key={invite.id} style={{ borderBottom: '1px solid #E0E0E0' }}>
               <td style={{ fontFamily: 'monospace' }}>{invite.code}</td>
               <td>{new Date(invite.createdAt).toLocaleDateString()}</td>
               <td style={{ textAlign: 'center' }}>

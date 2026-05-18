@@ -46,7 +46,7 @@ export default function NutritionInputs({
           mb: 2,
           textTransform: 'uppercase',
           fontSize: '0.75rem',
-          color: 'primary.main',
+          color: '#000000',
         }}
       >
         КБЖУ (на 100г)

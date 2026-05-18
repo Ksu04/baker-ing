@@ -114,7 +114,7 @@ export default function CustomerPage() {
   function loadPosts() {
     setLoading(true)
     fetch('/api/posts')
-      .then((res) => res.json())
+      .then((res) => (res.ok ? res.json() : []))
       .then(setPosts)
       .finally(() => setLoading(false))
   }

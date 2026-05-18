@@ -159,7 +159,7 @@ export default function PostCard({ post, isExpired, onDelete }: PostCardProps) {
                         </Typography>
                         <Typography
                           variant="subtitle1"
-                          sx={{ fontWeight: 700, color: 'primary.main' }}
+                          sx={{ fontWeight: 700, color: '#000000' }}
                         >
                           ${pp.price.toFixed(2)}
                         </Typography>

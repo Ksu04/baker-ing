@@ -26,7 +26,7 @@ export default function CustomerBookingsPage() {
   useEffect(() => {
     if (session?.user?.role === 'CUSTOMER') {
       fetch('/api/bookings')
-        .then((r) => r.json())
+        .then((r) => (r.ok ? r.json() : []))
         .then(setBookings)
         .finally(() => setLoading(false))
     }
