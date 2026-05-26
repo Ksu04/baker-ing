@@ -133,7 +133,7 @@ export default function NotificationBell() {
                   >
                     <ListItemText
                       primary={notification.message}
-                      secondary={new Date(notification.createdAt).toLocaleString()}
+                      secondary={new Date(notification.createdAt).toLocaleString('ru-RU')}
                       sx={{
                         fontWeight: notification.read ? 'normal' : 'bold',
                       }}

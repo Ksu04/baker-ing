@@ -12,6 +12,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import type { Product } from './types'
 import NutritionDisplay from '@/app/components/NutritionDisplay'
+import { calculateKBJU } from '@/lib/nutrition'
 
 interface ProductCardProps {
   product: Product
@@ -24,6 +25,8 @@ export default function ProductCard({
   onEdit,
   onDelete,
 }: ProductCardProps) {
+  const calculated = calculateKBJU(product.ingredients, product.koef)
+
   return (
     <Card
       sx={{
@@ -52,21 +55,20 @@ export default function ProductCard({
             {product.description}
           </Typography>
         )}
-        {(product.kcal || product.protein || product.fat || product.carbs) && (
+        {(calculated.kcal || calculated.protein || calculated.fat || calculated.carbs) && (
           <Box
             sx={{
               mb: 2,
               p: 1.5,
               bgcolor: 'background.default',
               borderRadius: 1,
-              p: 1.5,
             }}
           >
             <NutritionDisplay
-              kcal={product.kcal}
-              protein={product.protein}
-              fat={product.fat}
-              carbs={product.carbs}
+              kcal={calculated.kcal}
+              protein={calculated.protein}
+              fat={calculated.fat}
+              carbs={calculated.carbs}
               showLabel={true}
               size="small"
               variant="chips"

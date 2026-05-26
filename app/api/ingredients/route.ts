@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   const session = await requireBaker()
   const baker = await getBakerProfile(session.user.id)
 
-  const { name, quantity, metric } = await req.json()
+  const { name, quantity, metric, kcal, protein, fat, carbs } = await req.json()
   if (!name || quantity === undefined) {
     return NextResponse.json(
       { error: 'Name and quantity required' },
@@ -33,6 +33,10 @@ export async function POST(req: NextRequest) {
         quantity,
         metric: metric || 'g',
         bakerProfileId: baker.id,
+        kcal: kcal ? parseFloat(kcal) : null,
+        protein: protein ? parseFloat(protein) : null,
+        fat: fat ? parseFloat(fat) : null,
+        carbs: carbs ? parseFloat(carbs) : null,
       },
     })
     return NextResponse.json(ingredient)
@@ -47,7 +51,7 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   await requireBaker()
 
-  const { id, name, quantity, metric } = await req.json()
+  const { id, name, quantity, metric, kcal, protein, fat, carbs } = await req.json()
   if (!id || name === undefined || quantity === undefined) {
     return NextResponse.json(
       { error: 'ID, name and quantity required' },
@@ -58,7 +62,15 @@ export async function PUT(req: NextRequest) {
   try {
     const ingredient = await prisma.ingredient.update({
       where: { id },
-      data: { name, quantity, metric },
+      data: {
+        name,
+        quantity,
+        metric,
+        kcal: kcal !== undefined ? (kcal ? parseFloat(kcal) : null) : undefined,
+        protein: protein !== undefined ? (protein ? parseFloat(protein) : null) : undefined,
+        fat: fat !== undefined ? (fat ? parseFloat(fat) : null) : undefined,
+        carbs: carbs !== undefined ? (carbs ? parseFloat(carbs) : null) : undefined,
+      },
     })
     return NextResponse.json(ingredient)
   } catch (err) {

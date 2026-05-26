@@ -26,6 +26,7 @@ import { useListState } from '@/app/hooks/useFormState'
 import ProductSelectionModal from './ProductSelectionModal'
 import type { Product, SelectedPostProduct } from './types'
 import dayjs from 'dayjs'
+import 'dayjs/locale/ru'
 
 interface CreatePostCardProps {
   form: {
@@ -220,9 +221,10 @@ export default function CreatePostCard({
                 rows={4}
               />
 
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
                 <DateTimePicker
                   label="Дата и время самовывоза"
+                  format="DD/MM/YYYY HH:mm"
                   value={
                     form.values.pickupDate
                       ? dayjs(form.values.pickupDate)

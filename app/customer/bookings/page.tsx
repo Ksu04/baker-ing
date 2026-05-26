@@ -95,7 +95,7 @@ export default function CustomerBookingsPage() {
                       </Box>
                     </Box>
                     <Chip
-                      label={`$${totalAmount(booking).toFixed(2)}`}
+                      label={`${totalAmount(booking).toFixed(2)} ₽`}
                       color="primary"
                       sx={{ fontWeight: 700 }}
                     />
@@ -112,10 +112,10 @@ export default function CustomerBookingsPage() {
                     <Typography variant="body2">
                       Самовывоз:{' '}
                       <strong>
-                        {new Date(booking.pickupDate).toLocaleDateString('en-US', {
+                        {new Date(booking.pickupDate).toLocaleDateString('ru-RU', {
                           weekday: 'long',
-                          month: 'short',
                           day: 'numeric',
+                          month: 'numeric',
                           hour: '2-digit',
                           minute: '2-digit',
                         })}
@@ -203,7 +203,7 @@ export default function CustomerBookingsPage() {
                               x{item.quantity}
                             </Typography>
                             <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                              ${(item.price * item.quantity).toFixed(2)}
+                              {(item.price * item.quantity).toFixed(2)} ₽
                             </Typography>
                           </Box>
                         </Box>
@@ -213,7 +213,7 @@ export default function CustomerBookingsPage() {
 
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pt: 1 }}>
                     <Typography variant="caption" color="text.secondary">
-                      Забронировано: {new Date(booking.createdAt).toLocaleString()}
+                      Забронировано: {new Date(booking.createdAt).toLocaleString('ru-RU')}
                     </Typography>
                     <Typography variant="body2">
                       Итого: <strong>{booking.items.reduce((s, i) => s + i.quantity, 0)} шт.</strong>

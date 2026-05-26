@@ -10,7 +10,6 @@ import {
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import ImageUpload from './ImageUpload'
-import NutritionInputs from './NutritionInputs'
 import IngredientsList from './IngredientsList'
 import type { Ingredient, SelectedIngredient, Product } from './types'
 
@@ -18,10 +17,7 @@ type FormField =
   | 'name'
   | 'description'
   | 'photo'
-  | 'kcal'
-  | 'protein'
-  | 'fat'
-  | 'carbs'
+  | 'koef'
 
 interface ProductFormProps {
   editingId: string | null
@@ -32,10 +28,7 @@ interface ProductFormProps {
   ingredients: Ingredient[]
   selectedIngredients: SelectedIngredient[]
   ingredientWeights: { [key: string]: string }
-  kcal: string
-  protein: string
-  fat: string
-  carbs: string
+  koef: string
   error: string | null
   onChange: (field: FormField, value: string) => void
   onFileChange: (file: File | null) => void
@@ -59,10 +52,7 @@ export default function ProductForm({
   ingredients,
   selectedIngredients,
   ingredientWeights,
-  kcal,
-  protein,
-  fat,
-  carbs,
+  koef,
   error,
   onChange,
   onFileChange,
@@ -141,15 +131,20 @@ export default function ProductForm({
                 placeholder="Опишите ваш продукт..."
               />
 
-              <NutritionInputs
-                kcal={kcal}
-                protein={protein}
-                fat={fat}
-                carbs={carbs}
-                onKcalChange={(v) => onChange('kcal', v)}
-                onProteinChange={(v) => onChange('protein', v)}
-                onFatChange={(v) => onChange('fat', v)}
-                onCarbsChange={(v) => onChange('carbs', v)}
+              <TextField
+                fullWidth
+                label="Коэффициент потери влаги при выпечке"
+                type="number"
+                value={koef}
+                onChange={(e) => onChange('koef', e.target.value)}
+                size="small"
+                slotProps={{
+                  input: {
+                    inputProps: { min: 0, max: 0.99, step: 0.01 },
+                    autoComplete: 'off',
+                  },
+                }}
+                helperText="Например, 0.85 означает, что продукт теряет 85% веса при выпечке"
               />
             </Stack>
           </Box>

@@ -60,10 +60,10 @@ export default function PostCard({ post, isExpired, onDelete }: PostCardProps) {
             >
               <EventNoteIcon fontSize="small" color="primary" />
               <Typography variant="body2">
-                {new Date(post.pickupDate).toLocaleDateString('en-US', {
+                {new Date(post.pickupDate).toLocaleDateString('ru-RU', {
                   weekday: 'short',
-                  month: 'short',
                   day: 'numeric',
+                  month: 'numeric',
                   hour: '2-digit',
                   minute: '2-digit',
                 })}
@@ -161,7 +161,7 @@ export default function PostCard({ post, isExpired, onDelete }: PostCardProps) {
                           variant="subtitle1"
                           sx={{ fontWeight: 700, color: '#000000' }}
                         >
-                          ${pp.price.toFixed(2)}
+                          {pp.price.toFixed(2)} ₽
                         </Typography>
                       </Stack>
                       {pp.product.description && (

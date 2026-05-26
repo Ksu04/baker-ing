@@ -191,7 +191,7 @@ export default function PostDetailPage() {
               >
                 <EventNoteIcon fontSize="small" />
                 <Typography variant="body2">
-                  {new Date(post.pickupDate).toLocaleString()}
+                  {new Date(post.pickupDate).toLocaleString('ru-RU')}
                 </Typography>
               </Stack>
             </Box>
@@ -261,7 +261,7 @@ export default function PostDetailPage() {
                         color="#000000"
                         sx={{ fontWeight: 'bold' }}
                       >
-                        ${pp.price.toFixed(2)}
+                        {pp.price.toFixed(2)} ₽
                       </Typography>
                     </Box>
                   </Box>

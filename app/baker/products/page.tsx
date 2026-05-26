@@ -19,10 +19,7 @@ interface FormValues {
   name: string
   description: string
   photo: string
-  kcal: string
-  protein: string
-  fat: string
-  carbs: string
+  koef: string
 }
 
 export default function ProductsPage() {
@@ -40,10 +37,7 @@ export default function ProductsPage() {
       name: '',
       description: '',
       photo: '',
-      kcal: '',
-      protein: '',
-      fat: '',
-      carbs: '',
+      koef: '',
     },
   })
 
@@ -74,7 +68,7 @@ export default function ProductsPage() {
     e.preventDefault()
     setError(null)
     const method = editingId ? 'PUT' : 'POST'
-    const { name, description, photo, kcal, protein, fat, carbs } = form.values
+    const { name, description, photo, koef } = form.values
     const body = editingId
       ? {
           id: editingId,
@@ -82,20 +76,14 @@ export default function ProductsPage() {
           description,
           photo,
           ingredients: selectedIngredients.items,
-          kcal: kcal ? parseFloat(kcal) : null,
-          protein: protein ? parseFloat(protein) : null,
-          fat: fat ? parseFloat(fat) : null,
-          carbs: carbs ? parseFloat(carbs) : null,
+          koef: koef ? parseFloat(koef) : null,
         }
       : {
           name,
           description,
           photo,
           ingredients: selectedIngredients.items,
-          kcal: kcal ? parseFloat(kcal) : null,
-          protein: protein ? parseFloat(protein) : null,
-          fat: fat ? parseFloat(fat) : null,
-          carbs: carbs ? parseFloat(carbs) : null,
+          koef: koef ? parseFloat(koef) : null,
         }
 
     const res = await fetch('/api/products', {
@@ -132,7 +120,7 @@ export default function ProductsPage() {
   }
 
   const handleRemoveIngredient = (ingredientId: string) => {
-    selectedIngredients.remove(ingredientId)
+    selectedIngredients.setItems((prev) => prev.filter((item) => item.ingredientId !== ingredientId))
     setIngredientWeights((prev: Record<string, string>) => ({
       ...prev,
       [ingredientId]: '',
@@ -145,10 +133,7 @@ export default function ProductsPage() {
       name: product.name,
       description: product.description || '',
       photo: product.photo || '',
-      kcal: product.kcal?.toString() || '',
-      protein: product.protein?.toString() || '',
-      fat: product.fat?.toString() || '',
-      carbs: product.carbs?.toString() || '',
+      koef: product.koef?.toString() || '',
     })
     selectedIngredients.setItems(
       product.ingredients.map((i) => ({
@@ -211,21 +196,23 @@ export default function ProductsPage() {
           ingredients={ingredients}
           selectedIngredients={selectedIngredients.items}
           ingredientWeights={ingredientWeights}
-          kcal={form.values.kcal}
-          protein={form.values.protein}
-          fat={form.values.fat}
-          carbs={form.values.carbs}
+          koef={form.values.koef}
           error={error}
-          onChange={form.setValue}
+          onChange={(field, value) => form.setValue(field, value)}
           onFileChange={setFileInput}
           onAddIngredient={handleAddIngredient}
           onRemoveIngredient={handleRemoveIngredient}
-          onWeightChange={(id, w) =>
+          onWeightChange={(id, w) => {
             setIngredientWeights((prev: Record<string, string>) => ({
               ...prev,
               [id]: w,
             }))
-          }
+            selectedIngredients.setItems((prev) =>
+              prev.map((item) =>
+                item.ingredientId === id ? { ...item, weight: parseFloat(w) || 0 } : item
+              )
+            )
+          }}
           onCancel={handleCancel}
           onSubmit={handleSubmit}
         />

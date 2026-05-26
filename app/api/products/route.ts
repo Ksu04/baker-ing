@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { requireBaker, getBakerProfile } from '@/lib/auth'
+import { calculateKBJU } from '@/lib/nutrition'
 import fs from 'fs/promises'
 import path from 'path'
 
@@ -14,14 +15,16 @@ export async function GET(req: NextRequest) {
     orderBy: { name: 'asc' },
   })
 
-  return NextResponse.json(products)
+  return NextResponse.json(products, {
+    headers: { 'Cache-Control': 'no-store, must-revalidate' },
+  })
 }
 
 export async function POST(req: NextRequest) {
   const session = await requireBaker()
   const baker = await getBakerProfile(session.user.id)
 
-  const { name, description, photo, ingredients, kcal, protein, fat, carbs } =
+  const { name, description, photo, ingredients, koef } =
     await req.json()
   if (!name) {
     return NextResponse.json({ error: 'Name required' }, { status: 400 })
@@ -59,10 +62,7 @@ export async function POST(req: NextRequest) {
         name,
         description,
         photo: photoToSave,
-        kcal: kcal ? parseFloat(kcal) : null,
-        protein: protein ? parseFloat(protein) : null,
-        fat: fat ? parseFloat(fat) : null,
-        carbs: carbs ? parseFloat(carbs) : null,
+        koef: koef ? parseFloat(koef) : null,
         bakerProfileId: baker.id,
         ingredients: ingredients?.length
           ? {
@@ -80,8 +80,38 @@ export async function POST(req: NextRequest) {
             }
           : undefined,
       },
+      include: { ingredients: { include: { ingredient: true } } },
     })
-    return NextResponse.json(product)
+
+    const calculated = calculateKBJU(
+      product.ingredients.map((i) => ({
+        weight: i.weight,
+        ingredient: {
+          kcal: i.ingredient.kcal,
+          protein: i.ingredient.protein,
+          fat: i.ingredient.fat,
+          carbs: i.ingredient.carbs,
+        },
+      })),
+      product.koef
+    )
+
+    await prisma.product.update({
+      where: { id: product.id },
+      data: {
+        kcal: calculated.kcal,
+        protein: calculated.protein,
+        fat: calculated.fat,
+        carbs: calculated.carbs,
+      },
+    })
+
+    const updated = await prisma.product.findUnique({
+      where: { id: product.id },
+      include: { ingredients: { include: { ingredient: true } } },
+    })
+
+    return NextResponse.json(updated)
   } catch (err) {
     return NextResponse.json(
       { error: 'Failed to create product' },
@@ -99,10 +129,7 @@ export async function PUT(req: NextRequest) {
     description,
     photo,
     ingredients,
-    kcal,
-    protein,
-    fat,
-    carbs,
+    koef,
   } = await req.json()
   if (!id) {
     return NextResponse.json({ error: 'ID required' }, { status: 400 })
@@ -164,19 +191,45 @@ export async function PUT(req: NextRequest) {
         name,
         description,
         photo: photoToSave,
-        kcal: kcal !== undefined ? (kcal ? parseFloat(kcal) : null) : undefined,
-        protein:
-          protein !== undefined
-            ? protein
-              ? parseFloat(protein)
+        koef:
+          koef !== undefined
+            ? koef
+              ? parseFloat(koef)
               : null
             : undefined,
-        fat: fat !== undefined ? (fat ? parseFloat(fat) : null) : undefined,
-        carbs:
-          carbs !== undefined ? (carbs ? parseFloat(carbs) : null) : undefined,
+      },
+      include: { ingredients: { include: { ingredient: true } } },
+    })
+
+    const calculated = calculateKBJU(
+      product.ingredients.map((i) => ({
+        weight: i.weight,
+        ingredient: {
+          kcal: i.ingredient.kcal,
+          protein: i.ingredient.protein,
+          fat: i.ingredient.fat,
+          carbs: i.ingredient.carbs,
+        },
+      })),
+      product.koef
+    )
+
+    await prisma.product.update({
+      where: { id },
+      data: {
+        kcal: calculated.kcal,
+        protein: calculated.protein,
+        fat: calculated.fat,
+        carbs: calculated.carbs,
       },
     })
-    return NextResponse.json(product)
+
+    const updated = await prisma.product.findUnique({
+      where: { id },
+      include: { ingredients: { include: { ingredient: true } } },
+    })
+
+    return NextResponse.json(updated)
   } catch (err) {
     return NextResponse.json(
       { error: 'Failed to update product' },

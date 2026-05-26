@@ -79,6 +79,7 @@ model Product {
   protein        Float?
   fat            Float?
   carbs          Float?
+  koef           Float?
   postProducts   PostProduct[]
   baker          BakerProfile        @relation(fields: [bakerProfileId], references: [id])
   ingredients    ProductIngredient[]

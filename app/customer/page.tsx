@@ -20,16 +20,29 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import RestaurantIcon from '@mui/icons-material/Restaurant'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import NutritionDisplay from '@/app/components/NutritionDisplay'
+import { calculateKBJU } from '@/lib/nutrition'
 import type { Post, NutritionInfo, IngredientBasic } from '@/app/types'
 
-function NutritionInfoComponent({ nutrition }: { nutrition: NutritionInfo }) {
+function NutritionInfoComponent({
+  nutrition,
+  ingredients,
+  koef,
+}: {
+  nutrition: NutritionInfo
+  koef?: number | null
+  ingredients?: { weight: number | null; ingredient: { kcal: number | null; protein: number | null; fat: number | null; carbs: number | null } }[]
+}) {
+  const calculated = ingredients && ingredients.length > 0
+    ? calculateKBJU(ingredients, koef)
+    : null
+  const display = calculated?.kcal != null ? calculated : nutrition
   return (
     <Box sx={{ mt: 1 }}>
       <NutritionDisplay
-        kcal={nutrition.kcal}
-        protein={nutrition.protein}
-        fat={nutrition.fat}
-        carbs={nutrition.carbs}
+        kcal={display.kcal}
+        protein={display.protein}
+        fat={display.fat}
+        carbs={display.carbs}
         showLabel={false}
         size="small"
       />
@@ -252,7 +265,7 @@ export default function CustomerPage() {
                       sx={{ fontSize: 18, color: 'text.secondary' }}
                     />
                     <Typography variant="body2" color="text.secondary">
-                      Самовывоз: {new Date(post.pickupDate).toLocaleString()}
+                      Самовывоз: {new Date(post.pickupDate).toLocaleString('ru-RU')}
                     </Typography>
                   </Stack>
                 </Box>
@@ -323,13 +336,13 @@ export default function CustomerPage() {
                                     )}
                                   </Box>
                                   <Chip
-                                    label={`$${pp.price.toFixed(2)}`}
+                                    label={`${pp.price.toFixed(2)} ₽`}
                                     color="primary"
                                     sx={{ fontWeight: 700, fontSize: '1.1rem' }}
                                   />
                                 </Stack>
 
-                                <NutritionInfoComponent nutrition={pp.product} />
+                                <NutritionInfoComponent nutrition={pp.product} ingredients={pp.product.ingredients as any} koef={(pp.product as any).koef} />
                                 <IngredientsList
                                   ingredients={pp.product.ingredients}
                                 />
@@ -391,7 +404,7 @@ export default function CustomerPage() {
                           disabled={bookingPostId === post.id}
                           sx={{ py: 1.5, fontWeight: 700 }}
                         >
-                          Заказать ({getTotalItems(post.id)} шт.) — ${getTotalPrice(post.id).toFixed(2)}
+                          Заказать ({getTotalItems(post.id)} шт.) — {getTotalPrice(post.id).toFixed(2)} ₽
                         </Button>
                       )}
                     </Stack>

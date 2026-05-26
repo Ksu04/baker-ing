@@ -143,7 +143,7 @@ export default function InvitesPage() {
                       </Box>
                     )}
                   </TableCell>
-                  <TableCell>{new Date(invite.createdAt).toLocaleDateString()}</TableCell>
+                  <TableCell>{new Date(invite.createdAt).toLocaleDateString('ru-RU')}</TableCell>
                   <TableCell align="center">
                     {invite.active ? 'Да' : 'Нет'}
                   </TableCell>

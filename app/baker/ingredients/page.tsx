@@ -34,6 +34,10 @@ interface Ingredient {
   name: string
   quantity: number
   metric: string
+  kcal?: number | null
+  protein?: number | null
+  fat?: number | null
+  carbs?: number | null
 }
 
 export default function IngredientsPage() {
@@ -42,6 +46,10 @@ export default function IngredientsPage() {
   const [name, setName] = useState('')
   const [metric, setMetric] = useState('g')
   const [quantity, setQuantity] = useState('')
+  const [kcal, setKcal] = useState('')
+  const [protein, setProtein] = useState('')
+  const [fat, setFat] = useState('')
+  const [carbs, setCarbs] = useState('')
   const [editing, setEditing] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [deleteId, setDeleteId] = useState<string | null>(null)
@@ -65,8 +73,8 @@ export default function IngredientsPage() {
     setError(null)
     const method = editing ? 'PUT' : 'POST'
     const body = editing
-      ? { id: editing, name, quantity: parseFloat(quantity), metric }
-      : { name, quantity: parseFloat(quantity), metric }
+      ? { id: editing, name, quantity: parseFloat(quantity), metric, kcal, protein, fat, carbs }
+      : { name, quantity: parseFloat(quantity), metric, kcal, protein, fat, carbs }
 
     const res = await fetch('/api/ingredients', {
       method,
@@ -77,6 +85,10 @@ export default function IngredientsPage() {
     if (res.ok) {
       setName('')
       setQuantity('')
+      setKcal('')
+      setProtein('')
+      setFat('')
+      setCarbs('')
       setEditing(null)
       const updated = await fetch('/api/ingredients').then((r) => r.json())
       setIngredients(updated)
@@ -100,6 +112,10 @@ export default function IngredientsPage() {
     setName(ing.name)
     setQuantity(String(ing.quantity))
     setMetric(ing.metric)
+    setKcal(ing.kcal != null ? String(ing.kcal) : '')
+    setProtein(ing.protein != null ? String(ing.protein) : '')
+    setFat(ing.fat != null ? String(ing.fat) : '')
+    setCarbs(ing.carbs != null ? String(ing.carbs) : '')
   }
 
   return (
@@ -149,6 +165,15 @@ export default function IngredientsPage() {
                   <MenuItem value="tsp">tsp</MenuItem>
                 </TextField>
               </Box>
+              <Typography variant="caption" sx={{ fontWeight: 600, color: '#000000', display: 'block', mb: 0.5 }}>
+                КБЖУ (на 100г) — опционально, для расчёта КБЖУ продуктов
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                <TextField label="Ккал" type="number" value={kcal} onChange={(e) => setKcal(e.target.value)} size="small" sx={{ width: 100 }} slotProps={{ input: { autoComplete: 'off' } }} />
+                <TextField label="Белки, г" type="number" value={protein} onChange={(e) => setProtein(e.target.value)} size="small" sx={{ width: 100 }} slotProps={{ input: { autoComplete: 'off' } }} />
+                <TextField label="Жиры, г" type="number" value={fat} onChange={(e) => setFat(e.target.value)} size="small" sx={{ width: 100 }} slotProps={{ input: { autoComplete: 'off' } }} />
+                <TextField label="Углеводы, г" type="number" value={carbs} onChange={(e) => setCarbs(e.target.value)} size="small" sx={{ width: 110 }} slotProps={{ input: { autoComplete: 'off' } }} />
+              </Box>
               {error && <Alert severity="error">{error}</Alert>}
               <Box sx={{ display: 'flex', gap: 2 }}>
                 <Button
@@ -167,6 +192,10 @@ export default function IngredientsPage() {
                       setName('')
                       setQuantity('')
                       setMetric('g')
+                      setKcal('')
+                      setProtein('')
+                      setFat('')
+                      setCarbs('')
                     }}
                   >
                     Отмена
