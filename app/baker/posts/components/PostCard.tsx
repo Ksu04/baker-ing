@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import Link from 'next/link'
 import type { PostWithProducts } from './types'
 import NutritionDisplay from '@/app/components/NutritionDisplay'
+import { calculateKBJU } from '@/lib/nutrition'
 
 interface PostCardProps {
   post: PostWithProducts
@@ -173,16 +174,21 @@ export default function PostCard({ post, isExpired, onDelete }: PostCardProps) {
                           {pp.product.description}
                         </Typography>
                       )}
-                      <Box sx={{ mt: 1 }}>
-                        <NutritionDisplay
-                          kcal={pp.product.kcal}
-                          protein={pp.product.protein}
-                          fat={pp.product.fat}
-                          carbs={pp.product.carbs}
-                          showLabel={false}
-                          size="small"
-                        />
-                      </Box>
+                      {(() => {
+                        const c = calculateKBJU(pp.product.ingredients, pp.product.koef)
+                        return (
+                          <Box sx={{ mt: 1 }}>
+                            <NutritionDisplay
+                              kcal={c.kcal}
+                              protein={c.protein}
+                              fat={c.fat}
+                              carbs={c.carbs}
+                              showLabel={false}
+                              size="small"
+                            />
+                          </Box>
+                        )
+                      })()}
                       <Stack
                         direction="row"
                         sx={{

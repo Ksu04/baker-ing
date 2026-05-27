@@ -17,6 +17,7 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 import ArticleIcon from '@mui/icons-material/Article'
 import SendIcon from '@mui/icons-material/Send'
 import LogoutIcon from '@mui/icons-material/Logout'
+import SettingsIcon from '@mui/icons-material/Settings'
 import { signOut } from 'next-auth/react'
 import NotificationBell from '@/app/components/NotificationBell'
 
@@ -32,6 +33,7 @@ const menuItems = [
   },
   { label: 'Посты', href: '/baker/posts', icon: ArticleIcon },
   { label: 'Реферальные ссылки', href: '/baker/invites', icon: SendIcon },
+  { label: 'Настройки', href: '/baker/settings', icon: SettingsIcon },
 ]
 
 export default function BakerLayout({

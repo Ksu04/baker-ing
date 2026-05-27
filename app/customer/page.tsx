@@ -342,7 +342,7 @@ export default function CustomerPage() {
                                   />
                                 </Stack>
 
-                                <NutritionInfoComponent nutrition={pp.product} ingredients={pp.product.ingredients as any} koef={(pp.product as any).koef} />
+                                <NutritionInfoComponent nutrition={pp.product} ingredients={pp.product.ingredients} koef={pp.product.koef} />
                                 <IngredientsList
                                   ingredients={pp.product.ingredients}
                                 />

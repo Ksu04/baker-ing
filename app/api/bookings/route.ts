@@ -47,7 +47,8 @@ export async function GET(req: NextRequest) {
           items: [],
         }
       }
-      const ingredientsList = booking.postProduct.product.ingredients
+      const product = booking.postProduct.product
+      const ingredientsList = product.ingredients
         .map(i => i.ingredient.name)
         .join(', ')
       acc[postId].items.push({
@@ -55,14 +56,27 @@ export async function GET(req: NextRequest) {
         quantity: booking.quantity,
         price: booking.postProduct.price,
         product: {
-          name: booking.postProduct.product.name,
-          description: booking.postProduct.product.description,
-          photo: booking.postProduct.product.photo,
+          name: product.name,
+          description: product.description,
+          photo: product.photo,
           ingredients: ingredientsList || null,
-          kcal: booking.postProduct.product.kcal,
-          protein: booking.postProduct.product.protein,
-          fat: booking.postProduct.product.fat,
-          carbs: booking.postProduct.product.carbs,
+          kcal: product.kcal,
+          protein: product.protein,
+          fat: product.fat,
+          carbs: product.carbs,
+          koef: product.koef,
+          ingredientList: product.ingredients.map(i => ({
+            id: i.id,
+            weight: i.weight,
+            metric: i.metric,
+            ingredient: {
+              name: i.ingredient.name,
+              kcal: i.ingredient.kcal,
+              protein: i.ingredient.protein,
+              fat: i.ingredient.fat,
+              carbs: i.ingredient.carbs,
+            },
+          })),
         },
       })
       return acc

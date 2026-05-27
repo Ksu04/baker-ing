@@ -16,6 +16,7 @@ import {
 import EventNoteIcon from '@mui/icons-material/EventNote'
 import CakeIcon from '@mui/icons-material/Cake'
 import NutritionDisplay from '@/app/components/NutritionDisplay'
+import { calculateKBJU } from '@/lib/nutrition'
 import type { GroupedBooking } from '@/app/types'
 
 export default function CustomerBookingsPage() {
@@ -184,18 +185,21 @@ export default function CustomerBookingsPage() {
                                   {item.product.ingredients}
                                 </Typography>
                               )}
-                              {(item.product.kcal || item.product.protein || item.product.fat || item.product.carbs) && (
-                                <Box sx={{ mt: 1 }}>
-                                  <NutritionDisplay
-                                    kcal={item.product.kcal}
-                                    protein={item.product.protein}
-                                    fat={item.product.fat}
-                                    carbs={item.product.carbs}
-                                    showLabel={false}
-                                    size="small"
-                                  />
-                                </Box>
-                              )}
+                              {(() => {
+                                const c = calculateKBJU(item.product.ingredientList, item.product.koef)
+                                return (c.kcal || c.protein || c.fat || c.carbs) ? (
+                                  <Box sx={{ mt: 1 }}>
+                                    <NutritionDisplay
+                                      kcal={c.kcal}
+                                      protein={c.protein}
+                                      fat={c.fat}
+                                      carbs={c.carbs}
+                                      showLabel={false}
+                                      size="small"
+                                    />
+                                  </Box>
+                                ) : null
+                              })()}
                             </Box>
                           </Box>
                           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 0.5 }}>

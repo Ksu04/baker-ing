@@ -9,7 +9,7 @@ export interface IngredientBasic {
   id: string
   weight: number | null
   metric: string | null
-  ingredient: { name: string }
+  ingredient: { name: string; kcal: number | null; protein: number | null; fat: number | null; carbs: number | null }
 }
 
 export interface ProductBasic {
@@ -21,6 +21,7 @@ export interface ProductBasic {
   protein: number | null
   fat: number | null
   carbs: number | null
+  koef: number | null
   ingredients: IngredientBasic[]
 }
 
@@ -72,6 +73,8 @@ export interface BookingProduct {
   protein: number | null
   fat: number | null
   carbs: number | null
+  koef: number | null
+  ingredientList: IngredientBasic[]
 }
 
 export interface BookingItem {
