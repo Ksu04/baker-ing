@@ -87,7 +87,7 @@ export async function GET(req: NextRequest) {
       pickupDate: string
       createdAt: string
       baker: { id: string; name: string | null; bio: string | null; avatar: string | null }
-      items: { id: string; quantity: number; price: number; product: { name: string; description: string | null; photo: string | null; ingredients: string | null; kcal: number | null; protein: number | null; fat: number | null; carbs: number | null } }[]
+      items: { id: string; quantity: number; price: number; product: { name: string; description: string | null; photo: string | null; ingredients: string | null; kcal: number | null; protein: number | null; fat: number | null; carbs: number | null; koef: number | null; ingredientList: { id: string; weight: number | null; metric: string | null; ingredient: { name: string; kcal: number | null; protein: number | null; fat: number | null; carbs: number | null } }[] } }[]
     }>)
 
     return NextResponse.json(Object.values(groupedByPost))

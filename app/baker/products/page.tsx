@@ -110,13 +110,12 @@ export default function ProductsPage() {
     weight: number,
     metric: string
   ) => {
-    if (
-      !selectedIngredients.items.find(
-        (i: SelectedIngredient) => i.ingredientId === ingredientId
-      )
-    ) {
-      selectedIngredients.add({ ingredientId, weight, metric })
-    }
+    selectedIngredients.setItems((prev) => {
+      if (prev.some((i) => i.ingredientId === ingredientId)) {
+        return prev
+      }
+      return [...prev, { ingredientId, weight, metric }]
+    })
   }
 
   const handleRemoveIngredient = (ingredientId: string) => {

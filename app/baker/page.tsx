@@ -21,7 +21,7 @@ export default function BakerDashboard() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
-  if (status === 'loading' || status === 'unauthenticated')
+  if (status === 'loading' || status === 'unauthenticated' || !session)
     return <CircularProgress sx={{ mt: 4 }} />
   if (session.user?.role !== 'BAKER') {
     return (

@@ -157,6 +157,7 @@ export default function ProductSelectionModal({
                         <Checkbox
                           checked={selectedProductIds.has(p.id)}
                           onChange={() => onToggleProduct(p.id)}
+                          onClick={(e) => e.stopPropagation()}
                         />
                       </Stack>
                       {p.kcal && (

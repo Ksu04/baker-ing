@@ -83,6 +83,9 @@ export async function POST(req: NextRequest) {
     )
   }
 
+  if (!customerUser.customerProfile) {
+    return NextResponse.json({ error: 'Profile creation failed' }, { status: 500 })
+  }
   await prisma.subscription.create({
     data: {
       customerId: customerUser.customerProfile.id,

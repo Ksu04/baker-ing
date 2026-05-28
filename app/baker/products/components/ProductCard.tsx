@@ -122,7 +122,7 @@ export default function ProductCard({
             variant="contained"
             startIcon={<EditIcon />}
             onClick={() => onEdit(product)}
-            fullWidth
+            sx={{ flex: 2 }}
           >
             Редактировать
           </Button>
@@ -132,7 +132,7 @@ export default function ProductCard({
             color="error"
             startIcon={<DeleteIcon />}
             onClick={() => onDelete(product.id)}
-            fullWidth
+            sx={{ flex: 1 }}
           >
             Удалить
           </Button>

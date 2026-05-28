@@ -81,6 +81,31 @@ export async function PUT(req: NextRequest) {
   }
 }
 
+export async function PATCH(req: NextRequest) {
+  await requireBaker()
+
+  const { id, addQuantity } = await req.json()
+  if (!id || !addQuantity || addQuantity <= 0) {
+    return NextResponse.json(
+      { error: 'ID and addQuantity required' },
+      { status: 400 }
+    )
+  }
+
+  try {
+    const ingredient = await prisma.ingredient.update({
+      where: { id },
+      data: { quantity: { increment: addQuantity } },
+    })
+    return NextResponse.json(ingredient)
+  } catch (err) {
+    return NextResponse.json(
+      { error: 'Failed to add stock' },
+      { status: 500 }
+    )
+  }
+}
+
 export async function DELETE(req: NextRequest) {
   await requireBaker()
 
@@ -95,7 +120,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ success: true })
   } catch (err) {
     return NextResponse.json(
-      { error: 'Failed to delete ingredient' },
+      { error: 'Не удалось удалить ингредиент. Сначала удалите его из всех продуктов.' },
       { status: 500 }
     )
   }

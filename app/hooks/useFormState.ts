@@ -9,7 +9,7 @@ interface UseFormStateOptions<T extends object> {
   initialValues: T
 }
 
-interface UseFormStateReturn<T extends object> {
+export interface UseFormStateReturn<T extends object> {
   values: T
   setValues: React.Dispatch<React.SetStateAction<T>>
   setValue: <K extends keyof T>(key: K, value: T[K]) => void
@@ -37,13 +37,14 @@ export function useFormState<T extends object>({
   return { values, setValues, setValue, reset, fill }
 }
 
-export function useListState<T>(): {
+export function useListState<T extends { id?: string; productId?: string; ingredientId?: string }>(): {
   items: T[]
   setItems: React.Dispatch<React.SetStateAction<T[]>>
   add: (item: T) => void
   remove: (id: string) => void
   update: (id: string, data: Partial<T>) => void
   clear: () => void
+  toggle: (key: string, item: T) => void
 } {
   const [items, setItems] = useState<T[]>([])
 
@@ -51,13 +52,20 @@ export function useListState<T>(): {
     setItems((prev) => [...prev, item])
   }, [])
 
+  const matches = (item: any, key: string) =>
+    item.id === key || item.productId === key || item.ingredientId === key
+
   const remove = useCallback((id: string) => {
-    setItems((prev) => prev.filter((item: any) => item.id !== id))
+    setItems((prev) =>
+      prev.filter((item: any) => !matches(item, id))
+    )
   }, [])
 
   const update = useCallback((id: string, data: Partial<T>) => {
     setItems((prev) =>
-      prev.map((item: any) => (item.id === id ? { ...item, ...data } : item))
+      prev.map((item: any) =>
+        matches(item, id) ? { ...item, ...data } : item
+      )
     )
   }, [])
 
@@ -65,5 +73,15 @@ export function useListState<T>(): {
     setItems([])
   }, [])
 
-  return { items, setItems, add, remove, update, clear }
+  const toggle = useCallback((key: string, item: T) => {
+    setItems((prev) => {
+      const exists = prev.some((x: any) => matches(x, key))
+      if (exists) {
+        return prev.filter((x: any) => !matches(x, key))
+      }
+      return [...prev, item]
+    })
+  }, [])
+
+  return { items, setItems, add, remove, update, clear, toggle }
 }

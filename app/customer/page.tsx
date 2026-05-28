@@ -50,13 +50,13 @@ function NutritionInfoComponent({
   )
 }
 
-function IngredientsList({ ingredients }: { ingredients: IngredientBasic[] }) {
+function IngredientsList({ ingredients, productId }: { ingredients: IngredientBasic[]; productId?: string }) {
   if (ingredients.length === 0) return null
   return (
     <Stack direction="row" spacing={0.5} sx={{ mt: 1 }}>
       {ingredients.slice(0, 6).map((ing) => (
         <Chip
-          key={ing.id}
+          key={`${productId || ''}-${ing.id}`}
           label={`${ing.ingredient.name}${ing.weight ? ` (${ing.weight}${ing.metric || 'г'})` : ''}`}
           size="small"
           variant="outlined"
@@ -345,6 +345,7 @@ export default function CustomerPage() {
                                 <NutritionInfoComponent nutrition={pp.product} ingredients={pp.product.ingredients} koef={pp.product.koef} />
                                 <IngredientsList
                                   ingredients={pp.product.ingredients}
+                                  productId={pp.product.id}
                                 />
 
                                 <Divider sx={{ my: 2 }} />

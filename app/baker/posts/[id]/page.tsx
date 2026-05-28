@@ -281,20 +281,16 @@ export default function PostDetailPage() {
                 </Stack>
 
                 {productBookings.length === 0 ? (
-                    <Alert severity="info" sx={{ mt: 2 }}>
-                      Броней на этот продукт пока нет.
-                    </Alert>
-                  ) : (
-                    <TableContainer component={Paper} variant="outlined">
-                      <Table size="small">
+                  <Alert severity="info" sx={{ mt: 2 }}>
+                    Броней на этот продукт пока нет.
+                  </Alert>
+                ) : (
+                  <TableContainer component={Paper} variant="outlined" sx={{ mt: 2 }}>
+                    <Table size="small">
                       <TableHead>
                         <TableRow sx={{ backgroundColor: 'grey.100' }}>
                           <TableCell sx={{ fontWeight: 'bold' }}>
-                            <Stack
-                              direction="row"
-                              spacing={1}
-                              sx={{ alignItems: 'center', }}
-                            >
+                            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
                               <PersonIcon fontSize="small" />
                               Покупатель
                             </Stack>
@@ -311,15 +307,22 @@ export default function PostDetailPage() {
                         {productBookings.map((booking) => (
                           <TableRow key={booking.id} hover>
                             <TableCell>
-                              <Typography
-                  variant="body1"
-                  sx={{ color: 'text.secondary' }}
-                >
-                  {post.description}
-                </Typography>
-              )}
-            </CardContent>
-          </Card>
+                              <Typography variant="body2">
+                                {booking.customer.name || booking.customer.email}
+                              </Typography>
+                            </TableCell>
+                            <TableCell align="center">{booking.quantity}</TableCell>
+                            <TableCell align="right">
+                              {new Date(booking.createdAt).toLocaleString('ru-RU')}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
+              </CardContent>
+            </Card>
           )
         })}
       </Stack>

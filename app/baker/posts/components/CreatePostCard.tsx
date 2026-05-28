@@ -25,15 +25,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useListState } from '@/app/hooks/useFormState'
 import ProductSelectionModal from './ProductSelectionModal'
 import type { Product, SelectedPostProduct } from './types'
+import type { UseFormStateReturn } from '@/app/hooks/useFormState'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ru'
 
 interface CreatePostCardProps {
-  form: {
-    values: { title: string; description: string; pickupDate: string }
-    setValue: (key: string, value: string) => void
-    reset: () => void
-  }
+  form: UseFormStateReturn<{ title: string; description: string; pickupDate: string }>
   products: Product[]
   error: string | null
   onError: (error: string | null) => void
@@ -98,11 +95,7 @@ export default function CreatePostCard({
     field: 'price' | 'quantity',
     value: string
   ) => {
-    selectedProducts.setItems(
-      selectedProducts.items.map((p) =>
-        p.productId === productId ? { ...p, [field]: value } : p
-      )
-    )
+    selectedProducts.update(productId, { [field]: value })
   }
 
   const handleCancel = () => {
@@ -367,14 +360,7 @@ export default function CreatePostCard({
                 onProductSearchChange={setProductSearch}
                 onClose={() => setProductModalOpen(false)}
                 onToggleProduct={(productId) => {
-                  const existing = selectedProducts.items.find(
-                    (p) => p.productId === productId
-                  )
-                  if (existing) {
-                    selectedProducts.remove(productId)
-                  } else {
-                    selectedProducts.add({ productId, price: '', quantity: '' })
-                  }
+                  selectedProducts.toggle(productId, { productId, price: '', quantity: '' })
                 }}
               />
 

@@ -44,6 +44,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!user) return null
 
         console.log('AUTHORIZE 3')
+        if (!user.password) return null
         const isValid = await bcrypt.compare(
           credentials!.password as string,
           user.password
@@ -81,9 +82,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async session({ session, token }) {
       if (session.user && token) {
         session.user.id = token.sub as string
+<<<<<<< HEAD
+        session.user.role = (token as any).role as string
+        session.user.phone = (token as any).phone as string | null
+        session.user.name = (token as any).name as string | null
+=======
         session.user.role = token.role as string
         session.user.phone = token.phone as string | null
         session.user.name = token.name as string | null
+<<<<<<< Updated upstream
+=======
+>>>>>>> 16c2f262b39d013f401fb4fc6d7a77d7d47dfaae
+>>>>>>> Stashed changes
       }
       return session
     },

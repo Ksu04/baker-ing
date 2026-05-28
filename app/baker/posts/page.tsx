@@ -8,28 +8,12 @@ import CreatePostCard from './components/CreatePostCard'
 import PostsList from './components/PostsList'
 import DeleteConfirmDialog from './components/DeleteConfirmDialog'
 import type { PostWithProducts } from './components/types'
+import type { ProductBasic } from '@/app/types'
 
 export default function PostsPage() {
   const { data: session, status } = useSession()
   const [posts, setPosts] = useState<PostWithProducts[]>([])
-  const [products, setProducts] = useState<
-    {
-      id: string
-      name: string
-      description: string | null
-      photo: string | null
-      kcal: number | null
-      protein: number | null
-      fat: number | null
-      carbs: number | null
-      ingredients: {
-        id: string
-        weight: number | null
-        metric: string | null
-        ingredient: { name: string }
-      }[]
-    }[]
-  >([])
+  const [products, setProducts] = useState<ProductBasic[]>([])
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)

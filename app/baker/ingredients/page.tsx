@@ -53,6 +53,7 @@ export default function IngredientsPage() {
   const [editing, setEditing] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [deleteId, setDeleteId] = useState<string | null>(null)
+  const [addStock, setAddStock] = useState<Record<string, string>>({})
 
   useEffect(() => {
     if (session?.user?.role === 'BAKER') {
@@ -103,8 +104,28 @@ export default function IngredientsPage() {
 
   const handleDelete = async (id: string) => {
     setDeleteId(null)
-    await fetch(`/api/ingredients?id=${id}`, { method: 'DELETE' })
-    setIngredients(ingredients.filter((i) => i.id !== id))
+    const res = await fetch(`/api/ingredients?id=${id}`, { method: 'DELETE' })
+    if (res.ok) {
+      setIngredients(ingredients.filter((i) => i.id !== id))
+    } else {
+      const msg = await res.json().then((d) => d.error).catch(() => '')
+      setError(msg || 'Не удалось удалить ингредиент. Возможно, он используется в продуктах.')
+    }
+  }
+
+  const handleAddStock = async (id: string) => {
+    const val = addStock[id]
+    if (!val || parseFloat(val) <= 0) return
+    const res = await fetch('/api/ingredients', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, addQuantity: parseFloat(val) }),
+    })
+    if (res.ok) {
+      setAddStock((prev) => ({ ...prev, [id]: '' }))
+      const updated = await fetch('/api/ingredients').then((r) => r.json())
+      setIngredients(updated)
+    }
   }
 
   const handleEdit = (ing: Ingredient) => {
@@ -217,6 +238,9 @@ export default function IngredientsPage() {
                   Количество
                 </TableCell>
                 <TableCell align="right" sx={{ fontWeight: 600 }}>
+                  Добавить
+                </TableCell>
+                <TableCell align="right" sx={{ fontWeight: 600 }}>
                   Действия
                 </TableCell>
               </TableRow>
@@ -229,6 +253,36 @@ export default function IngredientsPage() {
                   </TableCell>
                   <TableCell align="right">
                     {ing.quantity} {ing.metric}
+                  </TableCell>
+                  <TableCell align="right">
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, justifyContent: 'flex-end' }}>
+                      <TextField
+                        type="number"
+                        size="small"
+                        placeholder="0"
+                        value={addStock[ing.id] || ''}
+                        onChange={(e) =>
+                          setAddStock((prev) => ({ ...prev, [ing.id]: e.target.value }))
+                        }
+                        onWheel={(e) =>
+                          e.target instanceof HTMLElement && e.target.blur()
+                        }
+                        onKeyDown={(e) =>
+                          ['ArrowUp', 'ArrowDown'].includes(e.key) && e.preventDefault()
+                        }
+                        slotProps={{ htmlInput: { style: { textAlign: 'right' } }, input: { autoComplete: 'off' } }}
+                        sx={{ width: 90 }}
+                      />
+                      <Button
+                        size="small"
+                        variant="contained"
+                        onClick={() => handleAddStock(ing.id)}
+                        disabled={!addStock[ing.id] || parseFloat(addStock[ing.id]) <= 0}
+                        sx={{ minWidth: 32, px: 1 }}
+                      >
+                        +
+                      </Button>
+                    </Box>
                   </TableCell>
                   <TableCell align="right">
                     <IconButton

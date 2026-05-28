@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid invite' }, { status: 404 })
   }
 
-  let user: { id: string; role: string; customerProfile: { id: string } | null } | null = null
+  let user: { id: string; role: string; password: string | null; customerProfile: { id: string } | null } | null = null
 
   if (email && password) {
     user = await prisma.user.findUnique({

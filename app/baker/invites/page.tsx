@@ -72,7 +72,7 @@ export default function InvitesPage() {
     setInvites(invites.filter((i) => i.id !== id))
   }
 
-  if (status === 'loading' || status === 'unauthenticated')
+  if (status === 'loading' || status === 'unauthenticated' || !session)
     return <CircularProgress sx={{ mt: 4 }} />
   if (session.user?.role !== 'BAKER') {
     return <Alert severity="error">Нет доступа</Alert>
