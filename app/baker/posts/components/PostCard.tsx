@@ -47,7 +47,7 @@ export default function PostCard({ post, isExpired, onDelete }: PostCardProps) {
               sx={{ alignItems: 'center', mb: 1.5 }}
               spacing={1.5}
             >
-              <Typography variant="h6" component="h2" sx={{ fontWeight: 700 }}>
+              <Typography variant="h5" component="h2" sx={{ fontWeight: 700 }}>
                 {post.title}
               </Typography>
               {isExpired(post.pickupDate) && (
