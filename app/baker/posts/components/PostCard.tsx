@@ -51,7 +51,7 @@ export default function PostCard({ post, isExpired, onDelete }: PostCardProps) {
                 {post.title}
               </Typography>
               {isExpired(post.pickupDate) && (
-                <Chip label="Просрочен" color="error" size="small" />
+                <Chip label="Завершен" color="default" size="small" />
               )}
             </Stack>
             <Stack

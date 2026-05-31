@@ -70,7 +70,7 @@ export default function PostsPage() {
     )
   }
 
-  const isExpired = (date: string) => new Date(date) < new Date()
+  const isExpired = (date: string) => new Date(date).getTime() + 86400000 < Date.now()
 
   return (
     <Box>

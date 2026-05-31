@@ -141,7 +141,7 @@ export default function PostDetailPage() {
     )
   }
 
-  const isExpired = new Date(post.pickupDate) < new Date()
+  const isExpired = new Date(post.pickupDate).getTime() + 86400000 < Date.now()
   const totalBookings = post.products.reduce(
     (sum, pp) => sum + pp.bookings.reduce((s, b) => s + b.quantity, 0),
     0
@@ -181,7 +181,7 @@ export default function PostDetailPage() {
                   {post.title}
                 </Typography>
                   {isExpired && (
-                  <Chip label="Просрочен" color="error" size="small" />
+                  <Chip label="Завершен" color="default" size="small" />
                 )}
               </Stack>
               <Stack

@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
           },
         },
       },
-      orderBy: { pickupDate: 'asc' },
+      orderBy: { pickupDate: 'desc' },
     })
     return NextResponse.json(posts)
   }
