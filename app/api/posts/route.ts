@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { Role, requireAuth, requireBaker, getBakerProfile } from '@/lib/auth'
 import { auth } from '@/auth'
+import { webPush } from '@/lib/push'
 
 export async function GET(req: NextRequest) {
   const session = await requireAuth()
@@ -144,6 +145,39 @@ export async function POST(req: NextRequest) {
         include: { products: { include: { product: true } } },
       })
     })
+    try {
+      const subscribers = await prisma.subscription.findMany({
+        where: { bakerId: baker.id },
+        include: {
+          customer: {
+            include: {
+              user: {
+                include: { pushSubscriptions: true },
+              },
+            },
+          },
+        },
+      })
+      const subs = subscribers.flatMap(
+        (s) => s.customer.user.pushSubscriptions
+      )
+      const payload = JSON.stringify({
+        title: 'Новый пост',
+        body: `${title} — скоро будет доступно!`,
+        url: `/customer`,
+      })
+      for (const sub of subs) {
+        webPush
+          .sendNotification(
+            { endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth } },
+            payload
+          )
+          .catch(() => {})
+      }
+    } catch {
+      // notifications are best-effort
+    }
+
     return NextResponse.json(post)
   } catch (err) {
     return NextResponse.json(

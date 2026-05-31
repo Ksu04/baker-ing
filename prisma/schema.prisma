@@ -19,6 +19,7 @@ model User {
   bookings        Booking[]
   customerProfile CustomerProfile?
   posts           Post[]           @relation("BakerPosts")
+  pushSubscriptions PushSubscription[]
 }
 
 model BakerProfile {
@@ -159,6 +160,19 @@ model Notification {
   read           Boolean      @default(false)
   createdAt      DateTime     @default(now())
   baker          BakerProfile @relation(fields: [bakerProfileId], references: [id])
+}
+
+model PushSubscription {
+  id         String   @id @default(cuid())
+  userId     String
+  endpoint   String   @unique
+  p256dh     String
+  auth       String
+  userAgent  String?
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
 
 enum UserRole {

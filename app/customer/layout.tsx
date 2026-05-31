@@ -14,13 +14,16 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import LogoutIcon from '@mui/icons-material/Logout'
 import SettingsIcon from '@mui/icons-material/Settings'
+import NotificationsIcon from '@mui/icons-material/Notifications'
 import { signOut } from 'next-auth/react'
+import PushNotificationProvider from '@/app/components/PushNotificationProvider'
 
 const drawerWidth = 240
 
 const menuItems = [
   { label: 'Посты пекарей', href: '/customer', icon: ShoppingBagIcon },
   { label: 'Мои брони', href: '/customer/bookings', icon: LocalShippingIcon },
+  { label: 'Уведомления', href: '/customer/notifications', icon: NotificationsIcon },
   { label: 'Настройки', href: '/customer/settings', icon: SettingsIcon },
 ]
 
@@ -31,6 +34,7 @@ export default function CustomerLayout({
 }) {
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+      <PushNotificationProvider />
       <Drawer
         variant="permanent"
         sx={{
