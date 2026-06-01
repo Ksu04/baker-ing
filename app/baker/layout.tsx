@@ -21,7 +21,7 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import { signOut } from 'next-auth/react'
 import NotificationBell from '@/app/components/NotificationBell'
 
-const drawerWidth = 240
+const drawerWidth = 280
 
 const menuItems = [
   { label: 'Дашборд', href: '/baker', icon: DashboardIcon },
@@ -55,10 +55,11 @@ export default function BakerLayout({
         }}
       >
         <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Box
-            sx={{ fontSize: '1.25rem', fontWeight: 700, color: '#000000' }}
-          >
-            🍰 Baker-Ing
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Box component="img" src="/logo.svg" alt="Baker-Ing" sx={{ height: 72, width: 'auto' }} />
+            <Box sx={{ fontSize: '1.25rem', fontWeight: 700, color: '#000000', fontFamily: 'MV Boli' }}>
+              Baker-Ing
+            </Box>
           </Box>
           <NotificationBell />
         </Box>

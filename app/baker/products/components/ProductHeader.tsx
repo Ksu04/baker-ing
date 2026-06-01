@@ -13,7 +13,7 @@ export default function ProductHeader() {
     >
       <CardContent>
         <Typography variant="h4" sx={{ mb: 1, fontWeight: 700 }}>
-          🧁 Управление продуктами
+          Управление продуктами
         </Typography>
         <Typography variant="body1" sx={{ opacity: 0.9 }}>
           Создавайте продукты с ингредиентами, затем добавляйте их в посты.

@@ -221,7 +221,7 @@ export default function ProductsPage() {
         variant="h5"
         sx={{ mb: 3, fontWeight: 600, color: '#000000' }}
       >
-        📦 Ваши продукты ({products.length})
+        Ваши продукты ({products.length})
       </Typography>
 
       <ProductGrid

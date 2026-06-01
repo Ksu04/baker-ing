@@ -36,7 +36,7 @@ export default function BakerDashboard() {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>
-            🍰 Панель пекаря
+            Панель пекаря
           </Typography>
           <Typography variant="body1" color="textSecondary">
             Добро пожаловать, {session.user.email}

@@ -54,7 +54,7 @@ export default function IngredientsList({
             color: '#000000',
           }}
         >
-          🥯 Выбрать ингредиенты
+          Выбрать ингредиенты
         </Typography>
         <Typography variant="caption" color="textSecondary">
           выбрано: {selectedIngredients.length}
@@ -108,7 +108,7 @@ export default function IngredientsList({
                     variant="body2"
                     sx={{ fontWeight: 600, minWidth: 120 }}
                   >
-                    🌾 {ing.name}
+                    {ing.name}
                   </Typography>
                 </Box>
 

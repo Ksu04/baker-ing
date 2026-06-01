@@ -212,7 +212,7 @@ export default function CustomerPage() {
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ textAlign: 'center', mb: 4 }}>
         <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1 }}>
-          🍰 Свежее от ваших пекарей
+          Свежее от ваших пекарей
         </Typography>
         <Typography variant="body1" color="text.secondary">
           Просматривайте и заказывайте вкусные угощения от любимых пекарей
@@ -235,7 +235,7 @@ export default function CustomerPage() {
           <CircularProgress />
         </Box>
       ) : activePosts.length === 0 ? (
-        <Alert severity="info">Активных постов пока нет. Загляните позже! 👨‍🍳</Alert>
+        <Alert severity="info">Активных постов пока нет. Загляните позже!</Alert>
       ) : (
         <Stack spacing={4}>
           {activePosts.map((post) => (
@@ -276,7 +276,7 @@ export default function CustomerPage() {
                     component="h2"
                     sx={{ fontWeight: 700, mb: 0.5 }}
                   >
-                    🍰 {post.title}
+                    {post.title}
                   </Typography>
                   {post.description && (
                     <Typography

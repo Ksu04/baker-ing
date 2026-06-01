@@ -26,7 +26,7 @@ export default function AuthHeader() {
             marginRight: 'auto',
           }}
         >
-          <Typography variant="h6" sx={{ cursor: 'pointer', fontWeight: 700 }}>
+          <Typography variant="h6" sx={{ cursor: 'pointer', fontWeight: 700, fontFamily: 'MV Boli' }}>
             Baker-Ing
           </Typography>
         </Link>

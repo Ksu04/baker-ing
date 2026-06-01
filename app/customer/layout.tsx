@@ -18,7 +18,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import { signOut } from 'next-auth/react'
 import PushNotificationProvider from '@/app/components/PushNotificationProvider'
 
-const drawerWidth = 240
+const drawerWidth = 280
 
 const menuItems = [
   { label: 'Посты пекарей', href: '/customer', icon: ShoppingBagIcon },
@@ -48,10 +48,13 @@ export default function CustomerLayout({
         }}
       >
         <Box sx={{ p: 2 }}>
-          <Box
-            sx={{ fontSize: '1.25rem', fontWeight: 700, color: '#000000' }}
-          >
-            🛍️ Покупатель
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+            <Box component="img" src="/logo.svg" alt="Baker-Ing" sx={{ height: 72, width: 'auto' }} />
+            <Box sx={{ fontSize: '1.25rem', fontWeight: 700, color: '#000000', fontFamily: 'MV Boli' }}>
+              Baker-Ing
+            </Box>
+          <Box sx={{ fontSize: '0.85rem', color: 'text.secondary', pl: 0.5 }}>
+            Покупатель
           </Box>
         </Box>
         <List sx={{ flex: 1 }}>
