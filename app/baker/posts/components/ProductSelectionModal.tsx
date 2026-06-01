@@ -194,7 +194,7 @@ export default function ProductSelectionModal({
                             {p.ingredients.slice(0, 5).map((ing) => (
                               <Chip
                                 key={ing.id}
-                                label={`${ing.ingredient.name}${ing.weight ? ` (${ing.weight}${ing.metric || 'g'})` : ''}`}
+                                label={`${ing.ingredient.name}${ing.weight ? ` (${ing.weight} ${ing.metric || 'г'})` : ''}`}
                                 size="small"
                                 variant="outlined"
                               />

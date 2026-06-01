@@ -40,22 +40,22 @@ export default function NutritionDisplay({
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', fontSize }}>
           {kcal && (
             <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-              🔥 {kcal} ккал
+              {kcal} ккал
             </Typography>
           )}
           {protein && (
             <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-              💪 {protein}г бел
+              {protein}г бел
             </Typography>
           )}
           {fat && (
             <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-              🧈 {fat}г жир
+              {fat}г жир
             </Typography>
           )}
           {carbs && (
             <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-              🍞 {carbs}г угл
+              {carbs}г угл
             </Typography>
           )}
         </Box>

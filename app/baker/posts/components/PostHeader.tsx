@@ -14,7 +14,7 @@ export default function PostHeader() {
       <CardContent>
         <Box>
           <Typography variant="h4" sx={{ mb: 0.5, fontWeight: 700 }}>
-            📝 Управление постами
+            Управление постами
           </Typography>
           <Typography variant="body1" sx={{ opacity: 0.9 }}>
             Создавайте и управляйте постами вашей пекарни

@@ -138,7 +138,7 @@ export default function ProductsPage() {
       product.ingredients.map((i) => ({
         ingredientId: i.ingredientId,
         weight: i.weight ?? 0,
-        metric: i.metric || 'g',
+        metric: i.metric || 'г',
       }))
     )
     const weights: { [key: string]: string } = {}

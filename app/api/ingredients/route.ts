@@ -11,7 +11,13 @@ export async function GET(req: NextRequest) {
     orderBy: { name: 'asc' },
   })
 
-  return NextResponse.json(ingredients)
+  const mapMetric = (m: string | null) => {
+    if (!m) return 'г'
+    const map: Record<string, string> = { g: 'г', kg: 'кг', ml: 'мл', l: 'л', pcs: 'шт', tbsp: 'ст.л.', tsp: 'ч.л.' }
+    return map[m] || m
+  }
+
+  return NextResponse.json(ingredients.map((i) => ({ ...i, metric: mapMetric(i.metric) })))
 }
 
 export async function POST(req: NextRequest) {
@@ -31,7 +37,7 @@ export async function POST(req: NextRequest) {
       data: {
         name,
         quantity,
-        metric: metric || 'g',
+        metric: metric || 'г',
         bakerProfileId: baker.id,
         kcal: kcal ? parseFloat(kcal) : null,
         protein: protein ? parseFloat(protein) : null,

@@ -99,7 +99,7 @@ export default function ProductCard({
               {product.ingredients.map((i) => (
                 <Chip
                   key={i.ingredientId}
-                  label={`${i.weight ?? 0}${i.metric || 'g'} ${i.ingredient?.name}`}
+                  label={`${i.weight ?? 0} ${i.metric || 'г'} ${i.ingredient?.name}`}
                   size="small"
                   variant="outlined"
                   sx={{ fontSize: '0.75rem' }}

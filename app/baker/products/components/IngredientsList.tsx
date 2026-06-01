@@ -144,7 +144,7 @@ export default function IngredientsList({
                       input: {
                         endAdornment: (
                           <InputAdornment position="end">
-                            {ing.metric}
+                            {ing.metric || 'г'}
                           </InputAdornment>
                         ),
                         autoComplete: 'off',

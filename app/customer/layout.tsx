@@ -53,6 +53,7 @@ export default function CustomerLayout({
             <Box sx={{ fontSize: '1.25rem', fontWeight: 700, color: '#000000', fontFamily: 'MV Boli' }}>
               Baker-Ing
             </Box>
+          </Box>
           <Box sx={{ fontSize: '0.85rem', color: 'text.secondary', pl: 0.5 }}>
             Покупатель
           </Box>

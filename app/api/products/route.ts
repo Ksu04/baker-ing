@@ -5,6 +5,12 @@ import { calculateKBJU } from '@/lib/nutrition'
 import fs from 'fs/promises'
 import path from 'path'
 
+const mapMetric = (m: string | null) => {
+  if (!m) return 'г'
+  const map: Record<string, string> = { g: 'г', kg: 'кг', ml: 'мл', l: 'л', pcs: 'шт', tbsp: 'ст.л.', tsp: 'ч.л.' }
+  return map[m] || m
+}
+
 export async function GET(req: NextRequest) {
   const session = await requireBaker()
   const baker = await getBakerProfile(session.user.id)
@@ -15,9 +21,17 @@ export async function GET(req: NextRequest) {
     orderBy: { name: 'asc' },
   })
 
-  return NextResponse.json(products, {
-    headers: { 'Cache-Control': 'no-store, must-revalidate' },
-  })
+  return NextResponse.json(
+    products.map((p) => ({
+      ...p,
+      ingredients: p.ingredients.map((pi) => ({
+        ...pi,
+        metric: mapMetric(pi.metric),
+        ingredient: { ...pi.ingredient, metric: mapMetric(pi.ingredient.metric) },
+      })),
+    })),
+    { headers: { 'Cache-Control': 'no-store, must-revalidate' } }
+  )
 }
 
 export async function POST(req: NextRequest) {

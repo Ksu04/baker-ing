@@ -44,7 +44,7 @@ export default function IngredientsPage() {
   const { data: session, status } = useSession()
   const [ingredients, setIngredients] = useState<Ingredient[]>([])
   const [name, setName] = useState('')
-  const [metric, setMetric] = useState('g')
+  const [metric, setMetric] = useState('г')
   const [quantity, setQuantity] = useState('')
   const [kcal, setKcal] = useState('')
   const [protein, setProtein] = useState('')
@@ -144,7 +144,7 @@ export default function IngredientsPage() {
       <Card sx={{ mb: 4 }}>
         <CardContent>
           <Typography variant="h4" sx={{ mb: 3, fontWeight: 600 }}>
-            🥄 Управление ингредиентами
+            Управление ингредиентами
           </Typography>
 
           <form onSubmit={handleSubmit}>
@@ -177,13 +177,13 @@ export default function IngredientsPage() {
                   size="small"
                   sx={{ width: 120 }}
                 >
-                  <MenuItem value="g">g</MenuItem>
-                  <MenuItem value="kg">kg</MenuItem>
-                  <MenuItem value="ml">ml</MenuItem>
-                  <MenuItem value="l">l</MenuItem>
-                  <MenuItem value="pcs">pcs</MenuItem>
-                  <MenuItem value="tbsp">tbsp</MenuItem>
-                  <MenuItem value="tsp">tsp</MenuItem>
+                  <MenuItem value="г">г</MenuItem>
+                  <MenuItem value="кг">кг</MenuItem>
+                  <MenuItem value="мл">мл</MenuItem>
+                  <MenuItem value="л">л</MenuItem>
+                  <MenuItem value="шт">шт</MenuItem>
+                  <MenuItem value="ст.л.">ст.л.</MenuItem>
+                  <MenuItem value="ч.л.">ч.л.</MenuItem>
                 </TextField>
               </Box>
               <Typography variant="caption" sx={{ fontWeight: 600, color: '#000000', display: 'block', mb: 0.5 }}>
@@ -252,7 +252,7 @@ export default function IngredientsPage() {
                     <Typography sx={{ fontWeight: 600 }}>{ing.name}</Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {ing.quantity} {ing.metric}
+                    {ing.quantity} {ing.metric || 'г'}
                   </TableCell>
                   <TableCell align="right">
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, justifyContent: 'flex-end' }}>

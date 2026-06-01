@@ -7,6 +7,12 @@ import {
   getCustomerProfile,
 } from '@/lib/auth'
 
+const mapMetric = (m: string | null) => {
+  if (!m) return 'г'
+  const map: Record<string, string> = { g: 'г', kg: 'кг', ml: 'мл', l: 'л', pcs: 'шт', tbsp: 'ст.л.', tsp: 'ч.л.' }
+  return map[m] || m
+}
+
 export async function GET(req: NextRequest) {
   const session = await requireAuth()
 
@@ -65,10 +71,10 @@ export async function GET(req: NextRequest) {
           fat: product.fat,
           carbs: product.carbs,
           koef: product.koef,
-          ingredientList: product.ingredients.map(i => ({
+            ingredientList: product.ingredients.map(i => ({
             id: i.id,
             weight: i.weight,
-            metric: i.metric,
+            metric: mapMetric(i.metric),
             ingredient: {
               name: i.ingredient.name,
               kcal: i.ingredient.kcal,

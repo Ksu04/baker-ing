@@ -57,7 +57,7 @@ function IngredientsList({ ingredients, productId }: { ingredients: IngredientBa
       {ingredients.slice(0, 6).map((ing) => (
         <Chip
           key={`${productId || ''}-${ing.id}`}
-          label={`${ing.ingredient.name}${ing.weight ? ` (${ing.weight}${ing.metric || 'г'})` : ''}`}
+          label={`${ing.ingredient.name}${ing.weight ? ` (${ing.weight} ${ing.metric || 'г'})` : ''}`}
           size="small"
           variant="outlined"
         />
@@ -378,7 +378,7 @@ export default function CustomerPage() {
                                     >
                                       {pp.availableQuantity > 0
                                         ? `${pp.availableQuantity} из ${pp.totalQuantity} доступно`
-                                        : '❌ Распродано'}
+                                        : 'Распродано'}
                                     </Typography>
                                   </Stack>
                                   {pp.availableQuantity > 0 && (
