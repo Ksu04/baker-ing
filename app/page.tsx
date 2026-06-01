@@ -18,12 +18,12 @@ export default async function Home() {
   return (
     <Container maxWidth="md" sx={{ py: 8 }}>
       <Box sx={{ textAlign: 'center' }}>
-        <Typography
-          variant="h2"
-          sx={{ mb: 4, fontWeight: 700, color: '#000000' }}
-        >
-          🍰 Baker-Ing
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2, mb: 4 }}>
+          <Box component="img" src="/logo.svg" alt="Baker-Ing" sx={{ height: 144, width: 'auto' }} />
+          <Typography variant="h2" sx={{ fontWeight: 700, color: '#000000', fontFamily: 'MV Boli' }}>
+            Baker-Ing
+          </Typography>
+        </Box>
 
         {session?.user ? (
           <Card sx={{ maxWidth: 500, mx: 'auto' }}>
